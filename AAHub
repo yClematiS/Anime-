@@ -173,6 +173,12 @@ local Farm_Toggle = MainTab:CreateToggle({
     Flag = "Auto Farm",
     Callback = function(Value)
     _G.isfarming = Value
+    Rayfield:Notify({
+        Title = "Aiweed",
+        Content = "Farm Status : ".. tostring(_G.isfarming),
+        Duration = 3,
+        Image = 4483362458,
+    })
     wait(10)
     local gmaae = workspace
 for i, v in pairs(gmaae:GetChildren()) do
@@ -201,12 +207,6 @@ for i, v in pairs(gmaae:GetChildren()) do
     }
     game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
 
-    Rayfield:Notify({
-        Title = "Aiweed",
-        Content = "Farm Status : ".. tostring(_G.isfarming),
-        Duration = 3,
-        Image = 4483362458,
-    })
 end
 end
 end
@@ -383,6 +383,53 @@ local EnableSecondHook = MainTab:CreateToggle({
 
 local GemFarm = MainWindow:CreateTab("Gems Mode")
 local KaitunFunction = GemFarm:CreateSection("Don't Put Anything In Here If You Using Macro Mode")
+_G.isgemfarming = false
+local GemFarm_Toggle = GemFarm:CreateToggle({
+    Name = "Auto Farm",
+    CurrentValue = false,
+    Flag = "Auto Gem Farm",
+    Callback = function(Value)
+    _G.isgemfarming = Value
+    Rayfield:Notify({
+        Title = "Aiweed",
+        Content = "Gem Farm Status : ".. tostring(_G.isgemfarming),
+        Duration = 3,
+        Image = 4483362458,
+    })
+    wait(10)
+    local gemgmaae = workspace
+for i, v in pairs(gemgmaae:GetChildren()) do
+    if v.Name == "weather" then
+    if _G.isgemfarming then
+    print("Farming: ".. tostring(Value))
+    local args = {
+        [1] = portal
+    }
+    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args))
+
+    wait(0.5)
+
+    local args = {
+        [1] = portal,
+        [2] = "namek_infinite",
+        [3] = false,
+        [4] = "Hard"
+    }
+    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))
+
+    wait(0.3)
+
+    local args = {
+        [1] = portal
+    }
+    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+
+end
+end
+end
+end,
+})
+
 local MaxUnitSelect = GemFarm:CreateDropdown({
     Name = "Select Max Unit",
     Options = unitOptions,
@@ -723,7 +770,7 @@ local DebuggerLoader = Debugger:CreateSection("Run Unit Debugger to get UnitID a
 local RunDegger = Debugger:CreateButton({
     Name = "RunDebugger",
     Callback = function()
-        loadstring(game:HttpGet('x'))()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/debugger'))()
     end,
 })
 
