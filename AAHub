@@ -1,0 +1,825 @@
+print("---------------------------------------------------------------------")
+
+_G.GroundOrHill = "Automatic" --ตั้งว่าตัวละครเราตีพื้นหรือแอร์ ถ้าตีพื้น "Ground" และแอร์ "Hill" และ "Automatic"
+
+if _G.GroundOrHill == "Hill" then
+    _G.L1 = CFrame.new(-2948.45849609375, 94.41859436035156, -718.0990600585938) * CFrame.Angles(0, -0, -0)
+    _G.L2 = CFrame.new(-2951.012451171875, 94.41859436035156, -715.6174926757812) * CFrame.Angles(0, -0, -0)
+    _G.L3 = CFrame.new(-2946.866943359375, 94.41859436035156, -715.58837890625) * CFrame.Angles(0, -0, -0)
+    _G.L4 = CFrame.new(-2951.372314453125, 94.41859436035156, -720.463134765625) * CFrame.Angles(0, -0, -0)
+    _G.L5 = CFrame.new(-2953.207275390625, 94.41859436035156, -722.3843994140625) * CFrame.Angles(0, -0, -0)
+end
+
+if _G.GroundOrHill == "Ground" then
+    _G.L1 = CFrame.new(-2955.7119140625, 91.80620574951172, -713.1185302734375) * CFrame.Angles(0, -0, -0)
+    _G.L2 = CFrame.new(-2938.81396484375, 91.80620574951172, -698.8776245117188) * CFrame.Angles(0, -0, -0)
+    _G.L3 = CFrame.new(-2943.4169921875, 91.80620574951172, -693.7794799804688) * CFrame.Angles(0, -0, -0)
+    _G.L4 = CFrame.new(-2942.13134765625, 91.80620574951172, -699.491455078125) * CFrame.Angles(0, -0, -0)
+    _G.L5 = CFrame.new(-2942.319580078125, 91.80620574951172, -700.6551513671875) * CFrame.Angles(0, -0, -0)
+end
+
+if _G.GroundOrHill == "Automatic" then
+    _G.Ground1 = CFrame.new(-2955.7119140625, 91.80620574951172, -713.1185302734375) * CFrame.Angles(0, -0, -0)
+    _G.Ground2 = CFrame.new(-2938.81396484375, 91.80620574951172, -698.8776245117188) * CFrame.Angles(0, -0, -0)
+    _G.Ground3 = CFrame.new(-2943.4169921875, 91.80620574951172, -693.7794799804688) * CFrame.Angles(0, -0, -0)
+    _G.Ground4 = CFrame.new(-2942.13134765625, 91.80620574951172, -699.491455078125) * CFrame.Angles(0, -0, -0)
+    _G.Ground5 = CFrame.new(-2942.319580078125, 91.80620574951172, -700.6551513671875) * CFrame.Angles(0, -0, -0)
+    _G.Hill1 = CFrame.new(-2948.45849609375, 94.41859436035156, -718.0990600585938) * CFrame.Angles(0, -0, -0)
+    _G.Hill2 = CFrame.new(-2951.012451171875, 94.41859436035156, -715.6174926757812) * CFrame.Angles(0, -0, -0)
+    _G.Hill3 = CFrame.new(-2946.866943359375, 94.41859436035156, -715.58837890625) * CFrame.Angles(0, -0, -0)
+    _G.Hill4 = CFrame.new(-2951.372314453125, 94.41859436035156, -720.463134765625) * CFrame.Angles(0, -0, -0)
+    _G.Hill5 = CFrame.new(-2953.207275390625, 94.41859436035156, -722.3843994140625) * CFrame.Angles(0, -0, -0)
+end
+wait(1)
+
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+    game:GetService("VirtualUser"):CaptureController()
+    game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+end)
+function getRandomKeyboardText3()
+    local characters = "!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:ZXCVBNM<>?1234567890qwertyuiop[]asdfghjkl;zxcvbnm,./"
+    local result = ""
+    for i = 1, 3 do
+        local randomIndex = math.random(2, #characters)
+        result = result .. string.sub(characters, randomIndex, randomIndex)
+    end
+    return result
+end
+local function startTypingAnimation3()
+    local randomText1 = getRandomKeyboardText3()
+    random_name = "| Clema"..randomText1.."tis Hub |"
+end
+spawn(startTypingAnimation3)
+_G.theme = "Amethyst"
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local MainWindow = Rayfield:CreateWindow({
+    Name = random_name,
+    Icon = 0,
+    LoadingTitle = "Loaded!",
+    LoadingSubtitle = "Script By seaweed_hunter",
+    Theme = _G.theme,
+    DisableRayfieldPrompts = false,
+    DisableBuildWarnings = false,
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = nil,
+        FileName = "Clematis"
+    },
+    Discord = {
+        Enabled = false,
+        Invite = "noinvitelink",
+        RememberJoins = true
+    },
+    KeySystem = false,
+    KeySettings = {
+        Title = "Key?",
+        Subtitle = "Key on Discord Server",
+        Note = "Get Key From Discord",
+        FileName = "Key",
+        SaveKey = true,
+        GrabKeyFromSite = false,
+        Key = {"What da hell"}
+    }
+})
+
+local MainTab = MainWindow:CreateTab("Main")
+local MainFunction = MainTab:CreateSection("Auto Farm")
+defaultportal = "1"
+defaultmap = "Namek"
+Selected_map = "namek_infinite"
+_G.isfarming = false
+_G.webhook = false
+_G.limitunit = 5
+_G.autoreconnect = true
+
+local unitOptions = {}
+for i = 1, 5 do
+    table.insert(unitOptions, tostring(i)) 
+end
+
+local PortalSelect = MainTab:CreateDropdown({
+    Name = "Select Teleport Capsule",
+    Options = {"1", "2", "3", "4", "5", "6", "7", "8","9","10","11","12"},
+    CurrentOption = defaultportal,
+    MultipleOptions = false,
+    Flag = "Selected Portal",
+    Callback = function(Options)
+        defaultportal = Options[1]
+        print("_lobbytemplategreen" .. defaultportal)
+        portal = "_lobbytemplategreen" .. defaultportal
+    end,
+})
+
+local MapSelect = MainTab:CreateDropdown({
+    Name = "Select Map",
+    Options = {"Planet Greenie", "Walled City","Snowy Town","Sand Village","Navy Bay","Fiend City","Spirit World","Ant Kingdom","Magic Town","Haunted Academy","Magic Hills","Space Center","Alien Spaceship","Ruined City","Puppet Island","Virtual Dungeon","Snowy Kingdom","Dungeon Throne","Mountain Temple","Rain Village","Fabled Kingdom"},
+    CurrentOption = defaultmap,
+    MultipleOptions = false,
+    Flag = "Selected Map",
+    Callback = function(Options)
+        defaultmap = Options[1]
+        print("Selected Map: " .. defaultmap)
+        if defaultmap == "Planet Greenie" then
+            Selected_map = "namek_infinite"
+        elseif defaultmap == "Walled City" then
+            Selected_map = "aot_infinite"
+        elseif defaultmap == "Snowy Town" then
+            Selected_map = "demonslayer_infinite"
+        elseif defaultmap == "Sand Village" then
+            Selected_map = "naruto_infinite"
+        elseif defaultmap == "Navy Bay" then
+            Selected_map = "marineford_infinite"
+        elseif defaultmap == "Fiend City" then
+            Selected_map = "tokyo_ghoul_infinite"
+        elseif defaultmap == "Spirit World" then
+            Selected_map = "hueco_infinite"
+        elseif defaultmap == "Ant Kingdom" then
+            Selected_map = "hxhant_infinite"
+        elseif defaultmap == "Magic Town" then
+            Selected_map = "magnolia_infinite"
+        elseif defaultmap == "Haunted Academy" then
+            Selected_map = "jjk_infinite"
+        elseif defaultmap == "Magic Hills" then
+            Selected_map = "clover_infinite"
+        elseif defaultmap == "Space Center" then
+            Selected_map = "jojo_infinite"
+        elseif defaultmap == "Alien Spaceship" then
+            Selected_map = "opm_infinite"
+        elseif defaultmap == "Ruined City" then
+            Selected_map = "mha_infinite"
+        elseif defaultmap == "Puppet Island" then
+            Selected_map = "dressrosa_infinite"
+        elseif defaultmap == "Virtual Dungeon" then
+            Selected_map = "sao_infinite"
+        elseif defaultmap == "Snowy Kingdom" then
+            Selected_map = "berserk_infinite"
+        elseif defaultmap == "Dungeon Throne" then
+            Selected_map = "overlord_infinite"
+        elseif defaultmap == "Mountain Temple" then
+            Selected_map = "fate_infinite"
+        elseif defaultmap == "Rain Village" then
+            Selected_map = "amegakure_infinite"
+        elseif defaultmap == "Fabled Kingdom" then
+            Selected_map = "7ds_infinite"
+        end
+        
+        print("Selected Map for teleport: " .. Selected_map)
+    end,
+})
+
+local Farm_Toggle = MainTab:CreateToggle({
+    Name = "Auto Farm",
+    CurrentValue = false,
+    Flag = "Auto Farm",
+    Callback = function(Value)
+    _G.isfarming = Value
+    wait(10)
+    local gmaae = workspace
+for i, v in pairs(gmaae:GetChildren()) do
+    if v.Name == "weather" then
+    if _G.isfarming then
+    print("Farming: ".. tostring(Value))
+    local args = {
+        [1] = portal
+    }
+    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args))
+
+    wait(0.5)
+
+    local args = {
+        [1] = portal,
+        [2] = Selected_map,
+        [3] = false,
+        [4] = "Hard"
+    }
+    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))
+
+    wait(0.3)
+
+    local args = {
+        [1] = portal
+    }
+    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+
+    Rayfield:Notify({
+        Title = "Aiweed",
+        Content = "Farm Status : ".. tostring(_G.isfarming),
+        Duration = 3,
+        Image = 4483362458,
+    })
+end
+end
+end
+end,
+})
+
+_G.autoupgrade = false
+local UpAllUnit = MainTab:CreateToggle({
+    Name = "Auto Upgrade All Units",
+    CurrentValue = false,
+    Flag = "UpAllUni",
+    Callback = function(Value)
+        _G.autoupgrade = Value
+if Value then
+local earth = workspace
+for  i, v in pairs(earth:GetChildren()) do
+if v.Name == "_waves_started" then
+        while _G.autoupgrade do
+            wait(1)
+            local wavenum = workspace._wave_num.Value
+            if wavenum >= 5 then
+                local tofind = workspace:WaitForChild("_UNITS")
+                for _, v in pairs(tofind:GetDescendants()) do
+                    if v.Name == "fakehead" and v.Parent and v.Parent:IsA("Model") then
+                        local upgrade = v.Parent.Name
+                        local units = workspace:WaitForChild("_UNITS"):GetChildren()
+                
+                        for _, unit in pairs(units) do
+                            if unit.Name == upgrade then
+                                local args = {
+                                    [1] = unit
+                                }
+                                local success, err = pcall(function()
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.upgrade_unit_ingame:InvokeServer(unpack(args))
+                                end)
+                
+                                if not success then
+                                    warn("Error upgrading unit: " .. tostring(err))
+                                end
+                                
+                                wait(0.5)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+        end
+    end
+        end
+    end,
+    })
+
+    _G.autoreplay = false
+    local AutoReplay = MainTab:CreateToggle({
+        Name = "Auto Replay",
+        CurrentValue = false,
+        Flag = "Auto_Replay",
+        Callback = function(Value)
+            _G.autoreplay = Value
+            if Value then
+                task.spawn(function()
+                    while _G.autoreplay do
+                        wait(1)
+                        
+                        local replayu = workspace
+                        local readydoreplay = false
+                        
+                        for i, v in pairs(replayu:GetChildren()) do
+                            if v.Name == "_waves_started" then
+                                local checkend = workspace:FindFirstChild("_DATA") and workspace._DATA:FindFirstChild("GameFinished")
+                                
+                                if checkend and checkend.Value == true then
+                                    local players = game:GetService("Players")
+                                    local player = players.LocalPlayer
+                                    local playerGui = player:FindFirstChild("PlayerGui")
+                                    
+                                    if playerGui then
+                                        local realresultsUI = playerGui:FindFirstChild("ResultsUI")
+                                        
+                                        if realresultsUI then
+                                            repeat
+                                                wait()
+                                            until realresultsUI.Enabled == true
+                                            
+                                            wait(1.5)
+                                            
+                                            local args = { [1] = "replay" }
+                                            local endpoints = game:GetService("ReplicatedStorage"):FindFirstChild("endpoints")
+                                            
+                                            if endpoints then
+                                                local invokePath = endpoints:FindFirstChild("client_to_server"):FindFirstChild("set_game_finished_vote")
+                                                
+                                                if invokePath then
+                                                    invokePath:InvokeServer(unpack(args))
+                                                    wait(1)
+                                                    invokePath:InvokeServer(unpack(args))
+                                                    readydoreplay = true
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                        
+                        if readydoreplay then
+                            return
+                        end
+                    end
+                end)
+            end
+        end
+    })
+
+local WebhookFunction = MainTab:CreateSection("Webhook")
+local Main_Webhook = MainTab:CreateInput({
+Name = "Main Notifier Webhook | (End Game Info), (Unit Place)",
+CurrentValue = "",
+PlaceholderText = "Input Webhook Url",
+RemoveTextAfterFocusLost = true,
+Flag = "Main_Notifier_Webhook",
+Callback = function(webhook_url)
+    _G.webhook_url = webhook_url
+    print(_G.webhook_url)
+end,
+})
+
+local EnableMainHook = MainTab:CreateToggle({
+    Name = "Enable Main Webhook",
+    CurrentValue = _G.webhook,
+    Flag = "Enable Main Webhook",
+    Callback = function(Value)
+        _G.webhook = Value
+        print("Main webhook :" .. tostring(Value))
+    end,
+})
+
+local Second_Webhook = MainTab:CreateInput({
+Name = "Reserve Notifier Webhook | (Player Uptime), etc.",
+CurrentValue = "",
+PlaceholderText = "Input Webhook Url",
+RemoveTextAfterFocusLost = true,
+Flag = "Reserve_Notifier_Webhook",
+Callback = function(playeruptimewebhook)
+    _G.playeruptimewebhook = playeruptimewebhook
+    print(_G.playeruptimewebhook)
+end,
+})
+
+local Delay_Webhook = MainTab:CreateInput({
+Name = "Reserve Notifier Webhook Delay (s)",
+CurrentValue = "",
+PlaceholderText = "Input Delay Second",
+RemoveTextAfterFocusLost = false,
+Flag = "Reserve Notifier Webhook",
+Callback = function(Delay)
+    _G.uptimedelay = Delay
+    print(_G.uptimedelay)
+end,
+})
+
+local EnableSecondHook = MainTab:CreateToggle({
+    Name = "Enable Reserve Webhook",
+    CurrentValue = false,
+    Flag = "Enable Reserve Webhook",
+    Callback = function(Value)
+        _G.playeruptime = Value
+        print("Reserve webhook : " .. tostring(Value))
+    end,
+})
+
+local GemFarm = MainWindow:CreateTab("Gems Mode")
+local KaitunFunction = GemFarm:CreateSection("Don't Put Anything In Here If You Using Macro Mode")
+local MaxUnitSelect = GemFarm:CreateDropdown({
+    Name = "Select Max Unit",
+    Options = unitOptions,
+    CurrentOption = tostring(_G.limitunit),
+    MultipleOptions = false,
+    Flag = "Selected Max Unit",
+    Callback = function(Options)
+        _G.limitunit = tonumber(Options[1])
+        print("เลือกจำนวนยูนิตสูงสุดเป็น: " .. _G.limitunit)
+    end,
+})
+
+local SaveUnit = GemFarm:CreateInput({
+    Name = "Input ID Here",
+    CurrentValue = "",
+    PlaceholderText = "Input UUID",
+    RemoveTextAfterFocusLost = false,
+    Flag = "SaveUnit",
+    Callback = function(saveunit)
+        _G.unit_id = saveunit
+    end,
+    })
+
+_G.EndAtWave = 0
+local KaitunFunction = GemFarm:CreateSection("This work with Macro Mode")
+local wavelock = GemFarm:CreateInput({
+    Name = "Sell units at wave",
+    CurrentValue = "",
+    PlaceholderText = "Input Wave",
+    RemoveTextAfterFocusLost = false,
+    Flag = "Wavelock",
+    Callback = function(waves)
+        _G.EndAtWave = waves
+        if _G.EndAtWave == "0" or nil then
+            print("infinite")
+        else
+            print(_G.EndAtWave)
+        end
+    end,
+})
+
+local autoSellEnabled = false
+local Dosellunitwave = GemFarm:CreateToggle({
+    Name = "Enable Auto Sell Unit",
+    CurrentValue = false,
+    Flag = "SellUnit11",
+    Callback = function(Value)
+        wait(3)
+        autoSellEnabled = Value
+        if Value then
+            print("End at ".._G.EndAtWave.." set!")
+            local wavese = tonumber(_G.EndAtWave)
+            task.spawn(function()
+                while autoSellEnabled do
+                    task.wait(1)
+
+                    local wavenum = workspace._wave_num.Value
+                    if wavenum >= wavese then
+                        local tofind = workspace:WaitForChild("_UNITS")
+                        for _, v in pairs(tofind:GetDescendants()) do
+                            if v.Name == "fakehead" and v.Parent and v.Parent:IsA("Model") then
+                                local sell = v.Parent.Name
+                                local units = tofind:GetChildren()
+                                for _, unit in pairs(units) do
+                                    if unit.Name == sell then
+                                        local args = {
+                                            [1] = unit
+                                        }
+                                        local success, err = pcall(function()
+                                            game:GetService("ReplicatedStorage").endpoints.client_to_server.sell_unit_ingame:InvokeServer(unpack(args))
+                                        end)
+                                        if not success then
+                                            warn("Error selling unit: " .. tostring(err))
+                                        end
+                                        task.wait(0.5)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+})
+
+local CustomMatch = MainWindow:CreateTab("Macro Mode")
+local unitData = {}
+
+function createUnitInputs(index)
+    local section = CustomMatch:CreateSection("Unit " .. index)
+
+    unitData[index] = {
+        uuid = nil,
+        location = CFrame.new(0, 0, 0),
+        wave = nil,
+        enabled = false
+    }
+
+    CustomMatch:CreateInput({
+        Name = "Unit ID",
+        CurrentValue = "",
+        PlaceholderText = "Input uuid",
+        RemoveTextAfterFocusLost = true,
+        Flag = "unit" .. index,
+        Callback = function(uu)
+            unitData[index].uuid = uu
+        end,
+    })
+
+    CustomMatch:CreateInput({
+        Name = "Unit Location",
+        CurrentValue = "",
+        PlaceholderText = "Input CFrame (x,y,z)",
+        RemoveTextAfterFocusLost = true,
+        Flag = "unit" .. index .. "cf",
+        Callback = function(loc)
+            local x, y, z = loc:match("([^,]+),([^,]+),([^,]+)")
+            x, y, z = tonumber(x), tonumber(y), tonumber(z)
+            if x and y and z then
+                unitData[index].location = CFrame.new(x, y, z)
+            else
+                warn("รูปแบบตำแหน่งไม่ถูกต้อง! ต้องใช้ x,y,z")
+            end
+        end,
+    })
+
+    CustomMatch:CreateInput({
+        Name = "Place At Wave",
+        CurrentValue = "",
+        PlaceholderText = "Input wave",
+        RemoveTextAfterFocusLost = true,
+        Flag = "unit" .. index .. "w",
+        Callback = function(wave)
+            unitData[index].wave = tonumber(wave) or 0
+        end,
+    })
+    CustomMatch:CreateToggle({
+        Name = "Enable Unit " .. index,
+        CurrentValue = false,
+        Flag = "EnableUnit" .. index,
+        Callback = function(Value)
+            unitData[index].enabled = Value
+        end,
+    })
+end
+
+function summonunit(index)
+    local unit = unitData[index]
+    if unit and unit.uuid and unit.location and unit.wave then
+        local args = {
+            [1] = unit.uuid,
+            [2] = unit.location 
+        }
+        game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+        wait(0.25)
+    else
+        warn("ข้อมูลของ Unit " .. index .. " ไม่ครบ ไม่สามารถเรียกยูนิตได้!")
+    end
+end
+
+for i = 1, 36 do
+    createUnitInputs(i)
+end
+
+task.spawn(function()
+    while true do
+        task.wait(1)
+
+        local currentWave = workspace._wave_num.Value
+        for i, unit in pairs(unitData) do
+            if unit.enabled and unit.wave and currentWave == unit.wave then
+                summonunit(i)
+            end
+        end
+    end
+end)
+
+
+local MiscTab = MainWindow:CreateTab("Miscellaneous")
+local MiscFunction = MiscTab:CreateSection("Helper")
+
+local MessageAonny = false
+local MessageToggle = MiscTab:CreateToggle({
+    Name = "Hide Annoying Message",
+    CurrentValue = true,
+    Flag = "MessageToggle",
+    Callback = function(Value)
+        MessageAonny = Value
+        local playerGui = game:GetService("Players").LocalPlayer:FindFirstChild("PlayerGui")
+        if playerGui then
+            local messageGui = playerGui:FindFirstChild("MessageGui")
+            if messageGui then
+                local messages = messageGui:FindFirstChild("messages")
+                if messages then
+                    messages.Visible = not Value
+                end
+            end
+        end
+    end,
+})
+
+local Eshowgem = false
+local ShowGemToggle = MiscTab:CreateToggle({
+    Name = "Show Gems",
+    CurrentValue = true,
+    Flag = "GemInfo",
+    Callback = function(Value)
+        Eshowgem = Value
+        local playerGui = game:GetService("Players").LocalPlayer:FindFirstChild("PlayerGui")
+        if playerGui then
+            local spawnUnits = playerGui:FindFirstChild("spawn_units")
+            if spawnUnits then
+                local lives = spawnUnits:FindFirstChild("Lives")
+                if lives then
+                    local frame = lives:FindFirstChild("Frame")
+                    if frame then
+                        local resource = frame:FindFirstChild("Resource")
+                        if resource then
+                            local gemUI = resource:FindFirstChild("Gem")
+                            if gemUI then
+                                gemUI.Visible = Value
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end,
+})
+
+
+local Debugger = MainWindow:CreateTab("Unit Debugger")
+
+unitTable = {}
+local getunitid = game:GetService("ReplicatedStorage")._FX_CACHE
+
+local function insertIntoTable(unitName, unitId, unitLv)
+    table.insert(unitTable, {
+        Name = unitName,
+        UUID = unitId,
+        Level = unitLv
+    })
+end
+
+for i, v in pairs(getunitid:GetDescendants()) do
+    if v.Name == "CollectionUnitFrame" then
+        local unitName = v.name.Text
+        local unitId = v._uuid.Value
+        local unitLv = v.Main.Level.Text
+        insertIntoTable(unitName, unitId, unitLv)
+    end
+end
+
+local unitNames = {}
+local unitUUIDs = {}
+
+for _, unit in ipairs(unitTable) do
+    local displayName = unit.Name .. " | Lv: " .. unit.Level
+    table.insert(unitNames, displayName)
+    table.insert(unitUUIDs, unit.UUID)
+end
+
+local wow = {}
+local Select_Unit = Debugger:CreateDropdown({
+    Name = "Select Unit to get ID",
+    Options = unitNames,
+    CurrentOption = unitNames[1] or "N/A",
+    MultipleOptions = false,
+    Flag = "Select Unit",
+    Callback = function(Options)
+        local selectedName = Options[1]:match("^(.-) | Lv:")
+        local selectedLevel = Options[1]:match("Lv: (.+)")
+
+        table.clear(wow)
+
+        for i, unit in ipairs(unitTable) do
+            if unit.Name == selectedName and unit.Level == selectedLevel then
+                table.insert(wow, unit.UUID)
+                break
+            end
+        end
+    end,
+})
+
+local Copyid = Debugger:CreateButton({
+    Name = "Copy Unit Id",
+    Callback = function()
+        if #wow > 0 then
+            local textToCopy = wow[1]
+            local function copyToClipboard(text)
+                local success, message = pcall(function()
+                    setclipboard(text)
+                end)
+
+                if success then
+                    print("ข้อความถูกคัดลอกเรียบร้อยแล้ว!")
+                else
+                    print("เกิดข้อผิดพลาดในการคัดลอกข้อความ:", message)
+                end
+            end
+
+            copyToClipboard(textToCopy)
+        else
+            print("ไม่พบ UUID สำหรับการคัดลอก!")
+        end
+    end,
+})
+
+local PlayerFeet = Debugger:CreateButton({
+    Name = "Copy Player Location Work With Unit",
+    Callback = function()
+        local character = game.Players.LocalPlayer.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            local rootPart = character.HumanoidRootPart
+            local rootCFrame = rootPart.CFrame
+            local rayOrigin = rootPart.Position
+            local rayDirection = Vector3.new(0, -100, 0)
+            local raycastParams = RaycastParams.new()
+            raycastParams.FilterDescendantsInstances = {character}
+            raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+            
+            local rayResult = workspace:Raycast(rayOrigin, rayDirection, raycastParams)
+            
+            if rayResult then
+                local groundedCFrame = CFrame.new(rootCFrame.Position.X, rayResult.Position.Y, rootCFrame.Position.Z) * rootCFrame.Rotation
+                local groundedCFrameStr = tostring(groundedCFrame)
+                setclipboard(groundedCFrameStr)
+                print("Grounded CFrame copied to clipboard: ", groundedCFrameStr)
+            else
+                print("No ground detected!")
+            end
+        end
+    end,
+})
+
+local DebuggerLoader = Debugger:CreateSection("Run Unit Debugger to get UnitID and Place Location")
+local RunDegger = Debugger:CreateButton({
+    Name = "RunDebugger",
+    Callback = function()
+        loadstring(game:HttpGet('x'))()
+    end,
+})
+
+Rayfield:LoadConfiguration()
+wait(1)
+
+print("Whitelist Checking...")
+local UserId = {2409247051, 2397033664, 3417044281, 2751779831, 2040934091}
+local ShirtId = {144076357}
+local player = game.Players.LocalPlayer
+local isUserIdWhitelisted = true
+local isShirtIdWhitelisted = true
+local tohec = nil
+
+for _, id in ipairs(UserId) do
+    if player.UserId == id then
+        isUserIdWhitelisted = true
+        print("UserId ผ่าน")
+    end
+end
+
+if player.Character then
+    for _, v in ipairs(player.Character:GetChildren()) do
+        if v:IsA("Shirt") then
+            local shirtId1 = string.match(v.ShirtTemplate, "%d+$")
+            if shirtId1 then
+                tohec = tonumber(shirtId1)
+            end
+        end
+    end
+end
+
+for _, whitelistedShirtId in ipairs(ShirtId) do
+    if tohec == whitelistedShirtId then
+        isShirtIdWhitelisted = true
+        print("ShirtId ผ่าน")
+    end
+end
+
+wait(0.1)
+if isUserIdWhitelisted or isShirtIdWhitelisted then
+    print(player.Name .. " เข้าสู่ระบบสำเร็จ")
+	wait(1)
+local scriptURLs = {
+    "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/AutoReconnectIfDis.lua",
+    "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/Drop_Notifier.lua",
+    "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/JoinNotifier.lua",
+    "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/Misc",
+    "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/PlayerUptime.lua",
+    "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/SendEndGameInfo.lua"
+}
+
+local screenText = Drawing.new("Text")
+screenText.Text = "Scripts Loaded: 0/" .. #scriptURLs
+screenText.Position = Vector2.new(10, 10)
+screenText.Size = 24
+screenText.Color = Color3.fromRGB(255, 255, 255)
+screenText.Outline = true
+screenText.OutlineColor = Color3.fromRGB(0, 0, 0)
+screenText.Visible = true
+
+local scriptsLoaded = 0
+
+local function runScript(url, index)
+    local success, err = pcall(function()
+        local scriptContent = game:HttpGet(url)
+        loadstring(scriptContent)()
+    end)
+
+    if success then
+        print(string.format("Script loaded successfully!"))
+    else
+        warn(string.format("Error loading script %d from %s: %s", (err)))
+    end
+
+    screenText.Text = string.format("Scripts Loaded")
+
+    if scriptsLoaded == #scriptURLs then
+        screenText.Text = "All Scripts Loaded!"
+        wait(30)
+        screenText.Visible = false
+    end
+end
+
+local function loadAllScripts()
+    print("Starting to load scripts...")
+    
+    for index, url in ipairs(scriptURLs) do
+        spawn(function()
+            runScript(url, index)
+        end)
+        wait(0.1)
+        scriptsLoaded = scriptsLoaded + 1
+    end
+end
+
+
+loadAllScripts()
+else
+    player:Kick("คุณไม่อยู่ใน whitelist หรือไม่มีเสื้อที่อนุญาต")
+end
