@@ -7,8 +7,17 @@ print([[
   \ \  \____\ \  \____\ \  \_|\ \ \  \    \ \  \ \  \ \  \   \ \  \ \ \  \|____|\  \  
    \ \_______\ \_______\ \_______\ \__\    \ \__\ \__\ \__\   \ \__\ \ \__\_________\
     \|_______|\|_______|\|_______|\|__|     \|__|\|__|\|__|    \|__|  \|__|\_________|
-                                                                          
+
+                        ___  ___  ___  ___  ________     
+                        |\  \|\  \|\  \|\  \|\   __  \    
+                        \ \  \\\  \ \  \\\  \ \  \|\ /_   
+                         \ \   __  \ \  \\\  \ \   __  \  
+                          \ \  \ \  \ \  \\\  \ \  \|\  \ 
+                           \ \__\ \__\ \_______\ \_______\
+                            \|__|\|__|\|_______|\|_______|
+----------------------------------------------------------------------------------------------- --
 ]])
+
 
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
@@ -980,6 +989,58 @@ end
 end,
 })
 
+_G.searcherayfield = true
+local foundray = false
+
+while _G.searcherayfield and not foundray do
+    task.wait(1)
+
+    local coreGui = game:GetService("CoreGui")
+    for _, v in pairs(coreGui:GetDescendants()) do
+        if v.Name == "Rayfield" then
+            local rayfie = v
+            foundray = true
+            _G.searcherayfield = false
+            
+            local player = game:GetService("Players").LocalPlayer
+            local playerGui = player:FindFirstChild("PlayerGui")
+            if not playerGui then
+                warn("PlayerGui not found!")
+                return
+            end
+
+            local screenGui = Instance.new("ScreenGui")
+            screenGui.Name = "ToggleRayfield"
+            screenGui.Parent = playerGui
+
+            local frame = Instance.new("Frame")
+            frame.Size = UDim2.new(0, 85, 0, 85)
+            frame.Position = UDim2.new(0.015, 0, 0.2, 0)
+            frame.BackgroundColor3 = Color3.fromRGB(153, 102, 204)
+            frame.BackgroundTransparency = 0.5
+            frame.BorderSizePixel = 5
+            frame.Parent = screenGui
+
+            local button = Instance.new("ImageButton")
+            button.Size = UDim2.new(1, 0, 1, 0)
+            button.BackgroundTransparency = 1
+            button.Image = "http://www.roblox.com/asset/?id=83415391084673"
+            button.Parent = frame
+
+            local isEnabled = false
+
+            button.MouseButton1Click:Connect(function()
+                isEnabled = not isEnabled
+                button.Image = isEnabled and "http://www.roblox.com/asset/?id=83415391084673" or "http://www.roblox.com/asset/?id=83415391084673"
+                frame.BackgroundColor3 = isEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
+                rayfie.Enabled = isEnabled
+            end)
+            
+            break
+        end
+    end
+end
+
 Rayfield:LoadConfiguration()
 
 local function vstart()
@@ -1088,19 +1149,6 @@ local function loadAllScripts()
         scriptsLoaded = scriptsLoaded + 1
     end
 end
-
-print([[
-
- ___  ___  ___  ___  ________     
-|\  \|\  \|\  \|\  \|\   __  \    
-\ \  \\\  \ \  \\\  \ \  \|\ /_   
- \ \   __  \ \  \\\  \ \   __  \  
-  \ \  \ \  \ \  \\\  \ \  \|\  \ 
-   \ \__\ \__\ \_______\ \_______\
-    \|__|\|__|\|_______|\|_______|
---------------------------------------------------------------------------------------
-]])
-
 
 loadAllScripts()
 else
