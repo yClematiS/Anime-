@@ -1,5 +1,14 @@
 print("---------------------------------------------------------------------")
-wait(1)
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait() -- รอ Character โหลด
+local rootPart = character:FindFirstChild("HumanoidRootPart")
+
+while not rootPart do
+    rootPart = character:FindFirstChild("HumanoidRootPart")
+    wait() -- รอจนกว่าจะพบ HumanoidRootPart
+end
+
+print("พบ HumanoidRootPart แล้ว!")
 
 game:GetService("Players").LocalPlayer.Idled:connect(function()
     game:GetService("VirtualUser"):CaptureController()
@@ -772,7 +781,7 @@ local RunDegger = Debugger:CreateButton({
 
 Rayfield:LoadConfiguration()
 print("---------------------------------------------------------------------")
-wait(1)
+wait(0.2)
 
 print("Whitelist Checking...")
 local UserId = {2409247051, 2397033664, 3417044281, 2751779831, 2040934091}
@@ -807,10 +816,9 @@ for _, whitelistedShirtId in ipairs(ShirtId) do
     end
 end
 
-wait(0.1)
 if isUserIdWhitelisted or isShirtIdWhitelisted then
     print(player.Name .. " เข้าสู่ระบบสำเร็จ")
-	wait(1)
+	wait(0.5)
 local scriptURLs = {
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/AutoReconnectIfDis.lua",
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/Drop_Notifier.lua",
@@ -848,7 +856,7 @@ local function runScript(url, index)
 
     if scriptsLoaded == #scriptURLs then
         screenText.Text = "All Scripts Loaded!"
-        wait(30)
+        wait(10)
         screenText.Visible = false
     end
 end
