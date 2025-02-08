@@ -19,7 +19,7 @@ end
 function getcode()
     local characters = "1234567890"
     local result = ""
-    for i = 1, 9 do
+    for i = 1, 5 do
         local randomIndex = math.random(2, #characters)
         result = result .. string.sub(characters, randomIndex, randomIndex)
     end
@@ -29,7 +29,8 @@ end
 local function startTypingAnimation3()
     local randomText1 = getmaincode()
     local randomText2 = getcode()
-    random_name = "| Clematis Hub | Session : ( "..randomText1..""..randomText2.." )"
+    local username = game.Players.LocalPlayer.Character.Name
+    random_name = " | Clematis Hub | " .. username .. " | Session : ( "..randomText1.."-"..randomText2.." ) "
 end
 spawn(startTypingAnimation3)
 _G.theme = "Amethyst"
