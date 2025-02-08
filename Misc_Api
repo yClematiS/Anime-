@@ -95,7 +95,7 @@ local embed = {
     ["fields"] = {
         {
             ["name"] = "ได้รันสคริป ณ เวลา",
-            ["fields"] = defaultuser,
+            ["name"] = defaultuser,
             ["value"] = getFormattedDateTime()
         }
     },
