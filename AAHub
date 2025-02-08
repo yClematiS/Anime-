@@ -1,11 +1,21 @@
-print("---------------------------------------------------------------------")
+print([[
+ ________  ___       _______   _____ ______   ________  _________  ___  ________      
+|\   ____\|\  \     |\  ___ \ |\   _ \  _   \|\   __  \|\___   ___\\  \|\   ____\     
+\ \  \___|\ \  \    \ \   __/|\ \  \\\__\ \  \ \  \|\  \|___ \  \_\ \  \ \  \___|_    
+ \ \  \    \ \  \    \ \  \_|/_\ \  \\|__| \  \ \   __  \   \ \  \ \ \  \ \_____  \   
+  \ \  \____\ \  \____\ \  \_|\ \ \  \    \ \  \ \  \ \  \   \ \  \ \ \  \|____|\  \  
+   \ \_______\ \_______\ \_______\ \__\    \ \__\ \__\ \__\   \ \__\ \ \__\____\_\  \ 
+    \|_______|\|_______|\|_______|\|__|     \|__|\|__|\|__|    \|__|  \|__|\_________\
+                                                                          \|_________|
+]])
+
 local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait() -- รอ Character โหลด
+local character = player.Character or player.CharacterAdded:Wait()
 local rootPart = character:FindFirstChild("HumanoidRootPart")
 
 while not rootPart do
     rootPart = character:FindFirstChild("HumanoidRootPart")
-    wait() -- รอจนกว่าจะพบ HumanoidRootPart
+    wait()
 end
 
 print("พบ HumanoidRootPart แล้ว!")
@@ -70,7 +80,7 @@ local MainWindow = Rayfield:CreateWindow({
         FileName = "Key",
         SaveKey = true,
         GrabKeyFromSite = false,
-        Key = {"What da hell"}
+        Key = {"NOOOO"}
     }
 })
 
@@ -780,7 +790,22 @@ local RunDegger = Debugger:CreateButton({
 })
 
 Rayfield:LoadConfiguration()
-print("---------------------------------------------------------------------")
+
+local function vstart()
+    local earth1 = workspace
+for _, v in pairs(earth1:GetChildren()) do
+    if v.Name == "_waves_started" then
+        local vstart = game:GetService("Players").LocalPlayer.PlayerGui.VoteStart
+repeat
+    wait()
+until vstart.Enabled == true
+wait(0.1)
+        game:GetService("ReplicatedStorage").endpoints.client_to_server.vote_start:InvokeServer()
+    end
+end
+end
+
+vstart()
 wait(0.2)
 
 print("Whitelist Checking...")
@@ -823,7 +848,7 @@ local scriptURLs = {
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/AutoReconnectIfDis.lua",
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/Drop_Notifier.lua",
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/JoinNotifier.lua",
-    "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/Misc",
+    "https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/Misc_Api",
     "https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/GemFarm",
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/PlayerUptime.lua",
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/SendEndGameInfo.lua"
@@ -873,6 +898,7 @@ local function loadAllScripts()
     end
 end
 
+print("--------------------------------------------------------------------------------------------")
 
 loadAllScripts()
 else
