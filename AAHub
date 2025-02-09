@@ -557,7 +557,7 @@ function createUnitInputs(index)
         Name = "Unit ID",
         CurrentValue = "",
         PlaceholderText = "Input uuid",
-        RemoveTextAfterFocusLost = true,
+        RemoveTextAfterFocusLost = false,
         Flag = "unit" .. index,
         Callback = function(uu)
             unitData[index].uuid = uu
@@ -568,7 +568,7 @@ function createUnitInputs(index)
         Name = "Unit Location",
         CurrentValue = "",
         PlaceholderText = "Input CFrame (x,y,z)",
-        RemoveTextAfterFocusLost = true,
+        RemoveTextAfterFocusLost = false,
         Flag = "unit" .. index .. "cf",
         Callback = function(loc)
             local x, y, z = loc:match("([^,]+),([^,]+),([^,]+)")
@@ -585,7 +585,7 @@ function createUnitInputs(index)
         Name = "Place At Wave",
         CurrentValue = "",
         PlaceholderText = "Input wave",
-        RemoveTextAfterFocusLost = true,
+        RemoveTextAfterFocusLost = false,
         Flag = "unit" .. index .. "w",
         Callback = function(wave)
             unitData[index].wave = tonumber(wave) or 0
@@ -813,7 +813,7 @@ function tid()
             Frame.Size = UDim2.new(0, 85, 0, 85)
             Frame.Position = UDim2.new(0.065, 0, 0.2, 0)
             Frame.BackgroundColor3 = Color3.fromRGB(153, 102, 204)
-            Frame.BackgroundTransparency = 0.5
+            Frame.BackgroundTransparency = 0.8
             Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
             Frame.BorderSizePixel = 5
             Frame.Active = true
@@ -824,7 +824,7 @@ function tid()
             Button.Size = UDim2.new(1, 0, 1, 0)
             Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
             Button.BackgroundTransparency = 0.8
-            Button.Text = "Hide"
+            Button.Text = "Hide Debugger"
             Button.TextColor3 = Color3.fromRGB(255, 255, 255)
             Button.Font = Enum.Font.SourceSans
             Button.TextSize = 15
@@ -835,100 +835,127 @@ function tid()
             Button.MouseButton1Click:Connect(function()
                 isEnabled = not isEnabled
                 if isEnabled then
-                    Button.Text = "Hide"
+                    Button.Text = "Hide Debugger"
                     Button.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
                     UnitList.Enabled = true
                 else
-                    Button.Text = "Show"
+                    Button.Text = "Show Debugger"
                     Button.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
                     UnitList.Enabled = false
                 end
             end)
         end
 
-local RunOldDebugger = Debugger:CreateSection("Run Old Unit Debugger to get UnitID")
-local RunOldDegger = Debugger:CreateButton({
-    Name = "Run Old Debugger",
-    Callback = function()
-        local gmasae = workspace
-
-for i, v in pairs(gmasae:GetChildren()) do
-    if v.Name == "weather" then
-
+-------------------------------------OLD DEBUGGER
 local getunitid = game:GetService("ReplicatedStorage")._FX_CACHE
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "Unit_ID_List"
 screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+screenGui.Enabled = false
+
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0.5, 0, 0.8, 0)
+mainFrame.Position = UDim2.new(0.25, 0, 0.1, 0)
+mainFrame.BackgroundColor3 = Color3.fromRGB(30,20,40)
+mainFrame.Parent = screenGui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 10)
+corner.Parent = mainFrame
 
 local destroyButton = Instance.new("TextButton")
 destroyButton.Size = UDim2.new(0, 25, 0, 25)
-destroyButton.Position = UDim2.new(0.76, 0, 0.05, 0)
+destroyButton.Position = UDim2.new(1, -30, 0, 5)
 destroyButton.Text = "X"
 destroyButton.TextSize = 14
 destroyButton.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
-destroyButton.Parent = screenGui
+destroyButton.Parent = mainFrame
 destroyButton.MouseButton1Click:Connect(function()
     screenGui:Destroy()
 end)
 
 local searchBar = Instance.new("TextBox")
-searchBar.Size = UDim2.new(0.5, 0, 0.05, 0)
-searchBar.Position = UDim2.new(0.25, 0, 0.05, 0)
-searchBar.PlaceholderText = "Search by Name"
+searchBar.Size = UDim2.new(0.9, 0, 0.05, 0)
+searchBar.Position = UDim2.new(0.05, 0, 0.05, 0)
+searchBar.Text = "Search unit"
+searchBar.PlaceholderText = "Search unit"
 searchBar.TextSize = 14
-searchBar.Text = ""
-searchBar.Parent = screenGui
+searchBar.Parent = mainFrame
 
 local scrollingFrame = Instance.new("ScrollingFrame")
-scrollingFrame.Size = UDim2.new(0.5, 0, 0.7, 0)
-scrollingFrame.Position = UDim2.new(0.25, 0, 0.15, 0)
+scrollingFrame.Size = UDim2.new(0.9, 0, 0.75, 0)
+scrollingFrame.Position = UDim2.new(0.05, 0, 0.12, 0)
 scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
-scrollingFrame.ScrollBarThickness = 10
-scrollingFrame.Parent = screenGui
+scrollingFrame.ScrollBarThickness = 5
+scrollingFrame.BackgroundTransparency = 1
+scrollingFrame.Parent = mainFrame
+scrollingFrame.ScrollingEnabled = true
 
 local listLayout = Instance.new("UIListLayout")
-listLayout.Padding = UDim.new(0, 10)
+listLayout.Padding = UDim.new(0, 5)
 listLayout.Parent = scrollingFrame
 
 local function displayUnits(searchTerm)
     for _, child in pairs(scrollingFrame:GetChildren()) do
         if child:IsA("Frame") then
-            child:Destroy()
+            local unitName = child:FindFirstChild("NameLabel")
+            if unitName and not string.find(string.lower(unitName.Text), string.lower(searchTerm)) then
+                child.Visible = false
+            else
+                child.Visible = true
+            end
         end
     end
-    for i, v in pairs(getunitid:GetDescendants()) do
+end
+
+local function fetchAndDisplayUnits()
+    for _, v in pairs(getunitid:GetDescendants()) do
         if v.Name == "CollectionUnitFrame" then
             local unitName = v.name.Text
             local unitId = v._uuid.Value
             local unitlv = v.Main.Level.Text
-            if string.find(string.lower(unitName), string.lower(searchTerm)) then
+            local frameExists = false
+
+            for _, child in pairs(scrollingFrame:GetChildren()) do
+                if child:IsA("Frame") and child:FindFirstChild("NameLabel") and child.NameLabel.Text == "Name: " .. unitName .. " | Lv: " .. unitlv then
+                    frameExists = true
+                    break
+                end
+            end
+
+            if not frameExists then
                 local frame = Instance.new("Frame")
-                frame.Size = UDim2.new(1, -20, 0, 100)
-                frame.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
-                frame.BorderSizePixel = 1
+                frame.Size = UDim2.new(1, 0, 0, 60)
+                frame.BackgroundColor3 = Color3.fromRGB(45,30,60)
                 frame.Parent = scrollingFrame
+                frame.Name = unitName .. " | Lv: " .. unitlv
+
+                local frameCorner = Instance.new("UICorner")
+                frameCorner.CornerRadius = UDim.new(0, 8)
+                frameCorner.Parent = frame
 
                 local nameLabel = Instance.new("TextLabel")
-                nameLabel.Size = UDim2.new(1, -10, 0.5, -5)
-                nameLabel.Position = UDim2.new(0, 5, 0, 5)
-                nameLabel.Text = "Name: " .. unitName .. " Level: " .. unitlv
+                nameLabel.Size = UDim2.new(0.6, 0, 0.5, 0)
+                nameLabel.Position = UDim2.new(0.05, 0, 0.1, 0)
+                nameLabel.Text = "Name: " .. unitName .. " | Lv: " .. unitlv
                 nameLabel.TextSize = 14
-                nameLabel.TextXAlignment = Enum.TextXAlignment.Left
+                nameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
                 nameLabel.BackgroundTransparency = 1
+                nameLabel.Name = "NameLabel"
                 nameLabel.Parent = frame
 
                 local idLabel = Instance.new("TextLabel")
-                idLabel.Size = UDim2.new(1, -10, 0.5, -5)
-                idLabel.Position = UDim2.new(0, 5, 0.5, 0)
+                idLabel.Size = UDim2.new(0.6, 0, 0.4, 0)
+                idLabel.Position = UDim2.new(0.05, 0, 0.5, 0)
                 idLabel.Text = "UUID: " .. unitId
-                idLabel.TextSize = 14
-                idLabel.TextXAlignment = Enum.TextXAlignment.Left
+                idLabel.TextSize = 12
+                idLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
                 idLabel.BackgroundTransparency = 1
                 idLabel.Parent = frame
 
                 local copyButton = Instance.new("TextButton")
-                copyButton.Size = UDim2.new(0.2, 0, 0.3, 0)
-                copyButton.Position = UDim2.new(0.79, 0, 0.1, 0)
+                copyButton.Size = UDim2.new(0.15, 0, 0.8, 0)
+                copyButton.Position = UDim2.new(0.7, 0, 0.1, 0)
                 copyButton.Text = "Copy"
                 copyButton.TextSize = 12
                 copyButton.BackgroundColor3 = Color3.fromRGB(100, 200, 100)
@@ -939,51 +966,92 @@ local function displayUnits(searchTerm)
                 end)
 
                 local EquipButton = Instance.new("TextButton")
-                EquipButton.Size = UDim2.new(0.2, 0, 0.2, 0)
-                EquipButton.Position = UDim2.new(0.79, 0, 0.4, 0)
+                EquipButton.Size = UDim2.new(0.15, 0, 0.8, 0)
+                EquipButton.Position = UDim2.new(0.85, 0, 0.1, 0)
                 EquipButton.Text = "Equip"
                 EquipButton.TextSize = 12
                 EquipButton.BackgroundColor3 = Color3.fromRGB(167, 22, 255)
                 EquipButton.Parent = frame
                 EquipButton.MouseButton1Click:Connect(function()
-
-                local args = {
-                   [1] = unitId
-                }
-
-                game:GetService("ReplicatedStorage").endpoints.client_to_server.equip_unit:InvokeServer(unpack(args))
+                    local args = { [1] = unitId }
+                    game:GetService("ReplicatedStorage").endpoints.client_to_server.equip_unit:InvokeServer(unpack(args))
                 end)
             end
         end
     end
-
-    listLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-        scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y + 10)
-    end)
 end
 
+spawn(function()
+    while true do
+        fetchAndDisplayUnits()
+        wait(1)
+    end
+end)
+
 local refreshButton = Instance.new("TextButton")
-refreshButton.Size = UDim2.new(0.15, 0, 0.05, 0)
-refreshButton.Position = UDim2.new(0.25, 0, 0.87, 0)
+refreshButton.Size = UDim2.new(0.4, 0, 0.05, 0)
+refreshButton.Position = UDim2.new(0.05, 0, 0.9, 0)
 refreshButton.Text = "Refresh Units"
 refreshButton.TextSize = 14
 refreshButton.BackgroundColor3 = Color3.fromRGB(200, 200, 255)
-refreshButton.Parent = screenGui
+refreshButton.Parent = mainFrame
 refreshButton.MouseButton1Click:Connect(function()
+    for _, child in pairs(scrollingFrame:GetChildren()) do
+        if child:IsA("Frame") then
+            child:Destroy()
+        end
+    end
     displayUnits(searchBar.Text)
 end)
 
-displayUnits("")
+local copyPositionButton = Instance.new("TextButton")
+copyPositionButton.Size = UDim2.new(0.4, 0, 0.05, 0)
+copyPositionButton.Position = UDim2.new(0.55, 0, 0.9, 0)
+copyPositionButton.Text = "Copy Player Standing Position"
+copyPositionButton.TextSize = 14
+copyPositionButton.BackgroundColor3 = Color3.fromRGB(180,140,200)
+copyPositionButton.Parent = mainFrame
+copyPositionButton.MouseButton1Click:Connect(function()
+    local character = game.Players.LocalPlayer.Character
+    if character and character:FindFirstChild("HumanoidRootPart") then
+        local rootPart = character.HumanoidRootPart
+        local rootCFrame = rootPart.CFrame
+        local rayOrigin = rootPart.Position
+        local rayDirection = Vector3.new(0, -100, 0)
+        local raycastParams = RaycastParams.new()
+        raycastParams.FilterDescendantsInstances = {character}
+        raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+        
+        local rayResult = workspace:Raycast(rayOrigin, rayDirection, raycastParams)
+        
+        if rayResult then
+            local groundedCFrame = CFrame.new(rootCFrame.Position.X, rayResult.Position.Y, rootCFrame.Position.Z) * rootCFrame.Rotation
+            local groundedCFrameStr = tostring(groundedCFrame)
+            setclipboard(groundedCFrameStr)
+            print("Grounded CFrame copied to clipboard: ", groundedCFrameStr)
+        else
+            print("No ground detected!")
+        end
+    end
+end)
 
 searchBar.Changed:Connect(function(property)
     if property == "Text" then
         displayUnits(searchBar.Text)
     end
 end)
-wait(1)
+
+listLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y + 10)
+end)
+
+displayUnits("")
+
+local RunOldDebugger = Debugger:CreateSection("Run Old Unit Debugger to get UnitID")
+local RunOldDegger = Debugger:CreateButton({
+    Name = "Run Old Debugger",
+    Callback = function()
 tid()
-end
-end
 end,
 })
 
@@ -1030,7 +1098,7 @@ while _G.searcherayfield and not foundray do
             button.MouseButton1Click:Connect(function()
                 isEnabled = not isEnabled
                 button.Image = isEnabled and "http://www.roblox.com/asset/?id=83415391084673" or "http://www.roblox.com/asset/?id=83415391084673"
-                frame.BackgroundColor3 = isEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
+                frame.BackgroundColor3 = isEnabled and Color3.fromRGB(255, 0, 0) or Color3.fromRGB(0, 255, 0)
                 rayfie.Enabled = isEnabled
             end)
             
