@@ -512,36 +512,59 @@ local GemSelect_Unit = GemFarm:CreateDropdown({
     MultipleOptions = false,
     Flag = "Gem Select Unit",
     Callback = function(Options)
+        if not Options[1] then return end
+
         local selectedName = Options[1]:match("^(.-) | Lv:")
         local selectedLevel = Options[1]:match("Lv: (.+)")
 
+        if not selectedName or not selectedLevel then
+            print("ไม่สามารถดึงชื่อหรือเลเวลได้")
+            return
+        end
+
+        if not Gemwow then Gemwow = {} end
         table.clear(Gemwow)
 
-        for i, unit in ipairs(GemunitTable) do
+        for _, unit in ipairs(GemunitTable) do
             if unit.Name == selectedName and unit.Level == selectedLevel then
                 table.insert(Gemwow, unit.UUID)
-                wait(0.2)
+
                 if #Gemwow > 0 then
                     local textToCopy = Gemwow[1]
+                    
                     local function savegemunit(gemtext)
                         local success, message = pcall(function()
-                            _G.unit_id = gemtext
+                            setclipboard(gemtext)
                         end)
-        
+
                         if success then
-                            print("ตั้งค่าแล้ว " .. _G.unit_id)
+                            print("ตั้งค่าแล้ว " .. gemtext)
                         else
-                            print("เอ่อ:", message)
+                            print("เกิดข้อผิดพลาด:", message)
                         end
                     end
-        
+
                     savegemunit(textToCopy)
+                end
+                
                 break
             end
         end
     end
-end
 })
+
+
+local enterunit = GemFarm:CreateInput({
+    Name = "Unit ID (Input ID)",
+    CurrentValue = "",
+    PlaceholderText = "Input Unit ID",
+    RemoveTextAfterFocusLost = false,
+    Flag = "unitgemfarm",
+    Callback = function(unitgem)
+        _G.unit_id = unitgem
+    end,
+})
+
 _G.isgemfarming = false
 local GemFarm_Toggle = GemFarm:CreateToggle({
     Name = "Auto Farm",
@@ -1168,20 +1191,6 @@ while _G.searcherayfield and not foundray do
     end
 end
 
-function genfarm()
-    repeat
-        if _G.unit_id then
-            task.spawn(function()
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/GemFarm"))()
-            end)
-        end
-        wait(0.1)
-    until not _G.unit_id
-end
-
-genfarm()
-
-
 Rayfield:LoadConfiguration()
 
 local function vstart()
@@ -1242,6 +1251,7 @@ local scriptURLs = {
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/Drop_Notifier.lua",
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/JoinNotifier.lua",
     "https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/Misc_Api",
+    "https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/GemFarm",
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/PlayerUptime.lua",
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/SendEndGameInfo.lua"
 }
