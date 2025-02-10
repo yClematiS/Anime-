@@ -529,33 +529,38 @@ local GemSelect_Unit = GemFarm:CreateDropdown({
             if unit.Name == selectedName and unit.Level == selectedLevel then
                 table.insert(Gemwow, unit.UUID)
 
-                if #Gemwow > 0 then
-                    local textToCopy = Gemwow[1]
-                    
-                    local function savegemunit(gemtext)
-                        local success, message = pcall(function()
-                            setclipboard(gemtext)
-                        end)
-
-                        if success then
-                            print("ตั้งค่าแล้ว " .. gemtext)
-                        else
-                            print("เกิดข้อผิดพลาด:", message)
-                        end
-                    end
-
-                    savegemunit(textToCopy)
-                end
-                
-                break
             end
         end
     end
 })
 
+local gemCopyid = GemFarm:CreateButton({
+    Name = "Copy Unit Id",
+    Callback = function()
+        if #Gemwow > 0 then
+            local gemtextToCopy = Gemwow[1]
+            local function copyToClipboard(gemtext)
+                local success, message = pcall(function()
+                    setclipboard(gemtext)
+                end)
+
+                if success then
+                    print("ข้อความถูกคัดลอกเรียบร้อยแล้ว!")
+                else
+                    print("เกิดข้อผิดพลาดในการคัดลอกข้อความ:", message)
+                end
+            end
+
+            copyToClipboard(gemtextToCopy)
+        else
+            print("ไม่พบ UUID สำหรับการคัดลอก!")
+        end
+    end,
+})
+
 
 local enterunit = GemFarm:CreateInput({
-    Name = "Unit ID (Input ID)",
+    Name = "Unit ID",
     CurrentValue = "",
     PlaceholderText = "Input Unit ID",
     RemoveTextAfterFocusLost = false,
