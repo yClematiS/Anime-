@@ -523,63 +523,25 @@ local GemSelect_Unit = GemFarm:CreateDropdown({
                 wait(0.2)
                 if #Gemwow > 0 then
                     local textToCopy = Gemwow[1]
-
                     local function savegemunit(gemtext)
                         local success, message = pcall(function()
-                            local filePath = "Clematis_Save/Unit_Cache.json"
-                            local HttpService = game:GetService("HttpService")
-
-                            if not isfolder("Clematis_Save") then
-                                makefolder("Clematis_Save")
-                            end
-
-                            local unitData = {{ Name = gemtext }}
-                            local jsonData = HttpService:JSONEncode(unitData)
-                            writefile(filePath, jsonData)
+                            _G.unit_id = gemtext
                         end)
-
-                        if not success then
-                            warn("❌ Failed to save unit data: " .. tostring(message))
+        
+                        if success then
+                            print("ตั้งค่าแล้ว " .. _G.unit_id)
+                        else
+                            print("เอ่อ:", message)
                         end
                     end
-
+        
                     savegemunit(textToCopy)
-                    break
-                end
+                break
             end
         end
     end
+end
 })
-
-local filePath = "Clematis_Save/Unit_Cache.json"
-local HttpService = game:GetService("HttpService")
-
-if not pcall(function() readfile(filePath) end) then
-    warn("⚠️ JSON file not found. Creating a new one...")
-    
-    if not isfolder("Clematis_Save") then
-        makefolder("Clematis_Save")
-    end
-    
-    local defaultData = HttpService:JSONEncode({})
-    writefile(filePath, defaultData)
-end
-
-local jsonData = readfile(filePath)
-local success, dataTable = pcall(function()
-    return HttpService:JSONDecode(jsonData)
-end)
-
-if not success or type(dataTable) ~= "table" then
-    warn("❌ JSON Decode failed or invalid format")
-    return
-end
-
-for _, unit in ipairs(dataTable) do
-    _G.unitid = unit.Name
-    print("📛 Name: " .. _G.unitid)
-end
-
 _G.isgemfarming = false
 local GemFarm_Toggle = GemFarm:CreateToggle({
     Name = "Auto Farm",
