@@ -1169,14 +1169,18 @@ while _G.searcherayfield and not foundray do
 end
 
 function genfarm()
-    if _G.unit_id then
-        task.spawn(function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/GemFarm"))()
-        end)
-    end
+    repeat
+        if _G.unit_id then
+            task.spawn(function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/GemFarm"))()
+            end)
+        end
+        wait(0.1)
+    until not _G.unit_id
 end
 
 genfarm()
+
 
 Rayfield:LoadConfiguration()
 
