@@ -77,7 +77,7 @@ local MainWindow = Rayfield:CreateWindow({
         FileName = "Clematis"
     },
     Discord = {
-        Enabled = true,
+        Enabled = false,
         Invite = "https://discord.gg/eKNTXnYB5E",
         RememberJoins = true
     },
