@@ -523,16 +523,17 @@ local GemSelect_Unit = GemFarm:CreateDropdown({
                     local textToCopy = Gemwow[1]
                     local function savegemunit(gemtext)
                         local success, message = pcall(function()
-                            _G.unit_id = gemtext
+                        local getunitid = game:GetService("ReplicatedStorage")._FX_CACHE
+                        local HttpService = game:GetService("HttpService")
+                        local unitData = {}
+                        table.insert(unitData, {
+                            Name = gemtext
+                        })
+                        local jsonData = HttpService:JSONEncode(unitData)
+                        writefile("Clematis_Save/Unit_Cache.json", jsonData)
                         end)
         
-                        if success then
-                            print("ตั้งค่าแล้ว " .. _G.unit_id)
-                        else
-                            print("เอ่อ:", message)
-                        end
                     end
-        
                     savegemunit(textToCopy)
                 break
             end
@@ -540,6 +541,32 @@ local GemSelect_Unit = GemFarm:CreateDropdown({
     end
 end
 })
+local HttpService = game:GetService("HttpService")
+local jsonData
+local success, dataTable
+
+local readSuccess, readError = pcall(function()
+    jsonData = readfile("Clematis_Save/Unit_Cache.json")
+end)
+
+if not readSuccess then
+    warn("⚠️ Failed to read JSON file: " .. tostring(readError))
+    return
+end
+
+success, dataTable = pcall(function()
+    return HttpService:JSONDecode(jsonData)
+end)
+
+if not success or type(dataTable) ~= "table" then
+    warn("❌ JSON Decode failed or invalid format")
+    return
+end
+
+for _, unit in ipairs(dataTable) do
+    _G.unitid = unit.Name
+    print("📛 Name: " .. _G.unitid)
+end
 
 _G.isgemfarming = false
 local GemFarm_Toggle = GemFarm:CreateToggle({
