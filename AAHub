@@ -27,7 +27,7 @@ while not rootPart do
     wait()
 end
 
-print("พบ HumanoidRootPart แล้ว!")
+print("Found HumanoidRootPart")
 
 game:GetService("Players").LocalPlayer.Idled:connect(function()
     game:GetService("VirtualUser"):CaptureController()
@@ -66,8 +66,8 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local MainWindow = Rayfield:CreateWindow({
     Name = random_name,
     Icon = 0,
-    LoadingTitle = "Loaded!",
-    LoadingSubtitle = "Script By seaweed_hunter",
+    LoadingTitle = "Loaded! (โหลดเสร็จแล้ว)",
+    LoadingSubtitle = "Script By Seaweed_hunter",
     Theme = _G.theme,
     DisableRayfieldPrompts = false,
     DisableBuildWarnings = false,
@@ -77,8 +77,8 @@ local MainWindow = Rayfield:CreateWindow({
         FileName = "Clematis"
     },
     Discord = {
-        Enabled = false,
-        Invite = "noinvitelink",
+        Enabled = true,
+        Invite = "https://discord.gg/eKNTXnYB5E",
         RememberJoins = true
     },
     KeySystem = false,
@@ -95,8 +95,8 @@ local MainWindow = Rayfield:CreateWindow({
 
 local MainTab = MainWindow:CreateTab("Main")
 local MainFunction = MainTab:CreateSection("Auto Farm")
-defaultportal = "2"
-defaultmap = "Namek"
+defaultportal = "10"
+defaultmap = "Planet Greenie"
 Selected_map = "namek_infinite"
 _G.isfarming = false
 _G.webhook = false
@@ -109,7 +109,7 @@ for i = 1, 5 do
 end
 
 local PortalSelect = MainTab:CreateDropdown({
-    Name = "Select Teleport Capsule",
+    Name = "Select Teleport Capsule (เลือกห้องวาร์ป)",
     Options = {"1", "2", "3", "4", "5", "6", "7", "8","9","10","11","12"},
     CurrentOption = defaultportal,
     MultipleOptions = false,
@@ -122,7 +122,7 @@ local PortalSelect = MainTab:CreateDropdown({
 })
 
 local MapSelect = MainTab:CreateDropdown({
-    Name = "Select Map",
+    Name = "Select Map (เลือกด่าน)",
     Options = {"Planet Greenie", "Walled City","Snowy Town","Sand Village","Navy Bay","Fiend City","Spirit World","Ant Kingdom","Magic Town","Haunted Academy","Magic Hills","Space Center","Alien Spaceship","Ruined City","Puppet Island","Virtual Dungeon","Snowy Kingdom","Dungeon Throne","Mountain Temple","Rain Village","Fabled Kingdom"},
     CurrentOption = defaultmap,
     MultipleOptions = false,
@@ -197,7 +197,7 @@ function farmnoti()
 end
 
 local Farm_Toggle = MainTab:CreateToggle({
-    Name = "Auto Farm",
+    Name = "Auto Farm (ฟาร์มอัตโนมัติสำหรับ Macro Mode)",
     CurrentValue = false,
     Flag = "Auto Farm",
     Callback = function(Value)
@@ -237,9 +237,11 @@ end
 end,
 })
 
+local ReversedFunction = MainTab:CreateSection("Match Settings")
+
 _G.autoupgrade = false
 local UpAllUnit = MainTab:CreateToggle({
-    Name = "Auto Upgrade All Units",
+    Name = "Auto Upgrade All Units (อัพตัวในด่านอัตโนมัติ)",
     CurrentValue = false,
     Flag = "UpAllUni",
     Callback = function(Value)
@@ -288,7 +290,7 @@ if v.Name == "_waves_started" then
 
     _G.autoreplay = false
     local AutoReplay = MainTab:CreateToggle({
-        Name = "Auto Replay",
+        Name = "Auto Replay (เริ่มด่านใหม่อัตโนมัติ)",
         CurrentValue = false,
         Flag = "Auto_Replay",
         Callback = function(Value)
@@ -348,9 +350,71 @@ if v.Name == "_waves_started" then
         end
     })
 
-local WebhookFunction = MainTab:CreateSection("Webhook")
+    _G.EndAtWave = 0
+    local wavelock = MainTab:CreateInput({
+        Name = "Sell units at wave (ขายตัวละครตอนเวฟ กำหนดเอง)",
+        CurrentValue = "",
+        PlaceholderText = "Input Wave",
+        RemoveTextAfterFocusLost = false,
+        Flag = "Wavelock",
+        Callback = function(waves)
+            _G.EndAtWave = waves
+            if _G.EndAtWave == "0" or nil then
+                print("infinite")
+            else
+                print(_G.EndAtWave)
+            end
+        end,
+    })
+    
+    local autoSellEnabled = false
+    local Dosellunitwave = MainTab:CreateToggle({
+        Name = "Enable Auto Sell Unit (เปิดการทำงานขายตัวละครตอนเวฟ)",
+        CurrentValue = false,
+        Flag = "SellUnit11",
+        Callback = function(Value)
+            wait(3)
+            autoSellEnabled = Value
+            if Value then
+                print("End at ".._G.EndAtWave.." set!")
+                local wavese = tonumber(_G.EndAtWave)
+                task.spawn(function()
+                    while autoSellEnabled do
+                        task.wait(1)
+    
+                        local wavenum = workspace._wave_num.Value
+                        if wavenum >= wavese then
+                            local tofind = workspace:WaitForChild("_UNITS")
+                            for _, v in pairs(tofind:GetDescendants()) do
+                                if v.Name == "fakehead" and v.Parent and v.Parent:IsA("Model") then
+                                    local sell = v.Parent.Name
+                                    local units = tofind:GetChildren()
+                                    for _, unit in pairs(units) do
+                                        if unit.Name == sell then
+                                            local args = {
+                                                [1] = unit
+                                            }
+                                            local success, err = pcall(function()
+                                                game:GetService("ReplicatedStorage").endpoints.client_to_server.sell_unit_ingame:InvokeServer(unpack(args))
+                                            end)
+                                            if not success then
+                                                warn("Error selling unit: " .. tostring(err))
+                                            end
+                                            task.wait(0.5)
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end)
+            end
+        end,
+    })
+
+local WebhookFunction = MainTab:CreateSection("Main Webhook, End Game Info, Inventory")
 local Main_Webhook = MainTab:CreateInput({
-Name = "Main Notifier Webhook | (End Game Info), (Unit Place)",
+Name = "Main Notifier Webhook (ลิ้งเว็ปฮุกสำหรับการแจ้งเตือนหลัก)",
 CurrentValue = "",
 PlaceholderText = "Input Webhook Url",
 RemoveTextAfterFocusLost = true,
@@ -362,7 +426,7 @@ end,
 })
 
 local EnableMainHook = MainTab:CreateToggle({
-    Name = "Enable Main Webhook",
+    Name = "Enable Main Webhook (เปิดการทำงานการแจ้งเตือนหลัก)",
     CurrentValue = _G.webhook,
     Flag = "Enable Main Webhook",
     Callback = function(Value)
@@ -371,8 +435,10 @@ local EnableMainHook = MainTab:CreateToggle({
     end,
 })
 
+local SecWebhookFunction = MainTab:CreateSection("Reserve Webhook, Player Online, Player Tracker")
+
 local Second_Webhook = MainTab:CreateInput({
-Name = "Reserve Notifier Webhook | (Player Uptime), etc.",
+Name = "Reserve Notifier Webhook (ลิ้งเว็ปฮุกสำหรับการแจ้งเตือนรอง)",
 CurrentValue = "",
 PlaceholderText = "Input Webhook Url",
 RemoveTextAfterFocusLost = true,
@@ -384,10 +450,10 @@ end,
 })
 
 local Delay_Webhook = MainTab:CreateInput({
-Name = "Reserve Notifier Webhook Delay (s)",
+Name = "Reserve Notifier Webhook Delay (s) (ตั้งค่าดีเลย์เป็นวินาที สำหรับเว็ปฮุกสำหรับการแจ้งเตือนรอง)",
 CurrentValue = "",
 PlaceholderText = "Input Delay Second",
-RemoveTextAfterFocusLost = false,
+RemoveTextAfterFocusLost = true,
 Flag = "Reserve Notifier Webhook",
 Callback = function(Delay)
     _G.uptimedelay = Delay
@@ -396,7 +462,7 @@ end,
 })
 
 local EnableSecondHook = MainTab:CreateToggle({
-    Name = "Enable Reserve Webhook",
+    Name = "Enable Reserve Webhook (เปิดเว็ปฮุกการแจ้งเตือนรอง)",
     CurrentValue = false,
     Flag = "Enable Reserve Webhook",
     Callback = function(Value)
@@ -406,10 +472,78 @@ local EnableSecondHook = MainTab:CreateToggle({
 })
 
 local GemFarm = MainWindow:CreateTab("Gems Mode")
-local KaitunFunction = GemFarm:CreateSection("Don't Put Anything In Here If You Using Macro Mode")
+local KaitunFunction = GemFarm:CreateSection("Standard Gem Farm")
+GemunitTable = {}
+local Gemgetunitid = game:GetService("ReplicatedStorage")._FX_CACHE
+local function insertIntoTable(unitName, unitId, unitLv)
+    table.insert(GemunitTable, {
+        Name = unitName,
+        UUID = unitId,
+        Level = unitLv
+    })
+end
+
+for i, v in pairs(Gemgetunitid:GetDescendants()) do
+    if v.Name == "CollectionUnitFrame" then
+        local unitName = v.name.Text
+        local unitId = v._uuid.Value
+        local unitLv = v.Main.Level.Text
+        insertIntoTable(unitName, unitId, unitLv)
+    end
+end
+
+local GemunitNames = {}
+local GemunitUUIDs = {}
+
+for _, unit in ipairs(GemunitTable) do
+    local GemdisplayName = unit.Name .. " | Lv: " .. unit.Level
+    table.insert(GemunitNames, GemdisplayName)
+    table.insert(GemunitUUIDs, unit.UUID)
+end
+
+local Gemwow = {}
+
+local GemSelect_Unit = GemFarm:CreateDropdown({
+    Name = "Select Unit to farm (เลือกตัวที่จะเล่น)",
+    Options = GemunitNames,
+    CurrentOption = GemunitNames[1] or "N/A",
+    MultipleOptions = false,
+    Flag = "Gem Select Unit",
+    Callback = function(Options)
+        local selectedName = Options[1]:match("^(.-) | Lv:")
+        local selectedLevel = Options[1]:match("Lv: (.+)")
+
+        table.clear(Gemwow)
+
+        for i, unit in ipairs(GemunitTable) do
+            if unit.Name == selectedName and unit.Level == selectedLevel then
+                table.insert(Gemwow, unit.UUID)
+                wait(0.2)
+                if #Gemwow > 0 then
+                    local textToCopy = Gemwow[1]
+                    local function savegemunit(gemtext)
+                        local success, message = pcall(function()
+                            _G.unit_id = gemtext
+                        end)
+        
+                        if success then
+                            print("ตั้งค่าแล้ว " .. _G.unit_id)
+                        else
+                            print("เอ่อ:", message)
+                        end
+                    end
+        
+                    savegemunit(textToCopy)
+                break
+            end
+        end
+    end
+end
+})
+
 _G.isgemfarming = false
 local GemFarm_Toggle = GemFarm:CreateToggle({
-    Name = "Auto Farm",
+    Name = "Auto Farm (เปิดโหมดไก่เพรช)",
     CurrentValue = false,
     Flag = "Auto Gem Farm",
     Callback = function(Value)
@@ -455,7 +589,7 @@ end,
 })
 
 local MaxUnitSelect = GemFarm:CreateDropdown({
-    Name = "Select Max Unit",
+    Name = "Select Max Unit (เลือกการจำกัดการวางตัวละคร)",
     Options = unitOptions,
     CurrentOption = tostring(_G.limitunit),
     MultipleOptions = false,
@@ -463,80 +597,6 @@ local MaxUnitSelect = GemFarm:CreateDropdown({
     Callback = function(Options)
         _G.limitunit = tonumber(Options[1])
         print("เลือกจำนวนยูนิตสูงสุดเป็น: " .. _G.limitunit)
-    end,
-})
-
-local SaveUnit = GemFarm:CreateInput({
-    Name = "Input ID Here",
-    CurrentValue = "",
-    PlaceholderText = "Input UUID",
-    RemoveTextAfterFocusLost = false,
-    Flag = "SaveUnit",
-    Callback = function(saveunit)
-        _G.unit_id = saveunit
-    end,
-    })
-
-_G.EndAtWave = 0
-local KaitunFunction = GemFarm:CreateSection("This work with Macro Mode")
-local wavelock = GemFarm:CreateInput({
-    Name = "Sell units at wave",
-    CurrentValue = "",
-    PlaceholderText = "Input Wave",
-    RemoveTextAfterFocusLost = false,
-    Flag = "Wavelock",
-    Callback = function(waves)
-        _G.EndAtWave = waves
-        if _G.EndAtWave == "0" or nil then
-            print("infinite")
-        else
-            print(_G.EndAtWave)
-        end
-    end,
-})
-
-local autoSellEnabled = false
-local Dosellunitwave = GemFarm:CreateToggle({
-    Name = "Enable Auto Sell Unit",
-    CurrentValue = false,
-    Flag = "SellUnit11",
-    Callback = function(Value)
-        wait(3)
-        autoSellEnabled = Value
-        if Value then
-            print("End at ".._G.EndAtWave.." set!")
-            local wavese = tonumber(_G.EndAtWave)
-            task.spawn(function()
-                while autoSellEnabled do
-                    task.wait(1)
-
-                    local wavenum = workspace._wave_num.Value
-                    if wavenum >= wavese then
-                        local tofind = workspace:WaitForChild("_UNITS")
-                        for _, v in pairs(tofind:GetDescendants()) do
-                            if v.Name == "fakehead" and v.Parent and v.Parent:IsA("Model") then
-                                local sell = v.Parent.Name
-                                local units = tofind:GetChildren()
-                                for _, unit in pairs(units) do
-                                    if unit.Name == sell then
-                                        local args = {
-                                            [1] = unit
-                                        }
-                                        local success, err = pcall(function()
-                                            game:GetService("ReplicatedStorage").endpoints.client_to_server.sell_unit_ingame:InvokeServer(unpack(args))
-                                        end)
-                                        if not success then
-                                            warn("Error selling unit: " .. tostring(err))
-                                        end
-                                        task.wait(0.5)
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-            end)
-        end
     end,
 })
 
@@ -554,7 +614,7 @@ function createUnitInputs(index)
     }
 
     CustomMatch:CreateInput({
-        Name = "Unit ID",
+        Name = "Unit ID (ไอดีตัว : )",
         CurrentValue = "",
         PlaceholderText = "Input uuid",
         RemoveTextAfterFocusLost = false,
@@ -565,7 +625,7 @@ function createUnitInputs(index)
     })
 
     CustomMatch:CreateInput({
-        Name = "Unit Location",
+        Name = "Unit Location (ตำแหน่ง : )",
         CurrentValue = "",
         PlaceholderText = "Input CFrame (x,y,z)",
         RemoveTextAfterFocusLost = false,
@@ -582,7 +642,7 @@ function createUnitInputs(index)
     })
 
     CustomMatch:CreateInput({
-        Name = "Place At Wave",
+        Name = "Place At Wave (วางเวฟที่ : )",
         CurrentValue = "",
         PlaceholderText = "Input wave",
         RemoveTextAfterFocusLost = false,
@@ -632,13 +692,12 @@ task.spawn(function()
     end
 end)
 
-
 local MiscTab = MainWindow:CreateTab("Miscellaneous")
 local MiscFunction = MiscTab:CreateSection("Helper")
 
 local MessageAonny = false
 local MessageToggle = MiscTab:CreateToggle({
-    Name = "Hide Annoying Message",
+    Name = "Hide Annoying Message (ซ่อนการแจ้งเตือนเกมที่น่ารำคาญ)",
     CurrentValue = true,
     Flag = "MessageToggle",
     Callback = function(Value)
@@ -658,7 +717,7 @@ local MessageToggle = MiscTab:CreateToggle({
 
 local Eshowgem = false
 local ShowGemToggle = MiscTab:CreateToggle({
-    Name = "Show Gems",
+    Name = "Show Gems (แสดงจำนวนเพรช)",
     CurrentValue = true,
     Flag = "GemInfo",
     Callback = function(Value)
@@ -718,8 +777,9 @@ for _, unit in ipairs(unitTable) do
 end
 
 local wow = {}
+local MainDebuggerLoader = Debugger:CreateSection("Manual unit debugger")
 local Select_Unit = Debugger:CreateDropdown({
-    Name = "Select Unit to get ID",
+    Name = "Select Unit to get ID (เลือกตัวเพิ่อหาไอดี)",
     Options = unitNames,
     CurrentOption = unitNames[1] or "N/A",
     MultipleOptions = false,
@@ -740,7 +800,7 @@ local Select_Unit = Debugger:CreateDropdown({
 })
 
 local Copyid = Debugger:CreateButton({
-    Name = "Copy Unit Id",
+    Name = "Copy Unit Id (คัดลอกไอดีตัวละครที่เลือก)",
     Callback = function()
         if #wow > 0 then
             local textToCopy = wow[1]
@@ -764,7 +824,7 @@ local Copyid = Debugger:CreateButton({
 })
 
 local PlayerFeet = Debugger:CreateButton({
-    Name = "Copy Player Location Work With Unit",
+    Name = "Copy Player Location Work With Unit (คัดลอกตำแหน่งผู้เล่นยืน สามารถใช้สำหรับตำแหน่งตัวละครได้)",
     Callback = function()
         local character = game.Players.LocalPlayer.Character
         if character and character:FindFirstChild("HumanoidRootPart") then
@@ -790,9 +850,9 @@ local PlayerFeet = Debugger:CreateButton({
     end,
 })
 
-local DebuggerLoader = Debugger:CreateSection("Run Unit Debugger to get UnitID and Place Location")
+local DebuggerLoader = Debugger:CreateSection("Run Unit Debugger to get UnitID and Place Location (ดีบั๊กสำหรับตัวรันมือถือ / คอมเลเวล 8+)")
 local RunDegger = Debugger:CreateButton({
-    Name = "RunDebugger",
+    Name = "Run Debugger [Only Mobile Executor or PC Level 8+ Executor]",
     Callback = function()
         loadstring(game:HttpGet('https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/debugger'))()
     end,
@@ -1049,7 +1109,7 @@ displayUnits("")
 
 local RunOldDebugger = Debugger:CreateSection("Run Old Unit Debugger to get UnitID")
 local RunOldDegger = Debugger:CreateButton({
-    Name = "Run Old Debugger",
+    Name = "Run Old Debugger (ตัวดีบั๊กเก่าใช้งานดี ง่าย)",
     Callback = function()
 tid()
 end,
