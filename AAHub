@@ -1168,6 +1168,16 @@ while _G.searcherayfield and not foundray do
     end
 end
 
+function genfarm()
+    if _G.unit_id then
+        task.spawn(function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/GemFarm"))()
+        end)
+    end
+end
+
+genfarm()
+
 Rayfield:LoadConfiguration()
 
 local function vstart()
@@ -1228,7 +1238,6 @@ local scriptURLs = {
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/Drop_Notifier.lua",
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/JoinNotifier.lua",
     "https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/Misc_Api",
-    "https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/GemFarm",
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/PlayerUptime.lua",
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/SendEndGameInfo.lua"
 }
