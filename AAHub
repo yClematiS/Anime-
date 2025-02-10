@@ -34,6 +34,8 @@ game:GetService("Players").LocalPlayer.Idled:connect(function()
     game:GetService("VirtualUser"):ClickButton2(Vector2.new())
 end)
 
+warn("Anti Afk ทำงานอยู่")
+
 function getmaincode()
     local characters = "QWERTYUIOPASDFGHJKLZXCVBNM"
     local result = ""
