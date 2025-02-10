@@ -470,11 +470,12 @@ local EnableSecondHook = MainTab:CreateToggle({
         print("Reserve webhook : " .. tostring(Value))
     end,
 })
-
 local GemFarm = MainWindow:CreateTab("Gems Mode")
 local KaitunFunction = GemFarm:CreateSection("Standard Gem Farm")
+
 GemunitTable = {}
 local Gemgetunitid = game:GetService("ReplicatedStorage")._FX_CACHE
+
 local function insertIntoTable(unitName, unitId, unitLv)
     table.insert(GemunitTable, {
         Name = unitName,
@@ -521,42 +522,33 @@ local GemSelect_Unit = GemFarm:CreateDropdown({
                 wait(0.2)
                 if #Gemwow > 0 then
                     local textToCopy = Gemwow[1]
+
                     local function savegemunit(gemtext)
                         local success, message = pcall(function()
-                        local getunitid = game:GetService("ReplicatedStorage")._FX_CACHE
-                        local HttpService = game:GetService("HttpService")
-                        local unitData = {}
-                        table.insert(unitData, {
-                            Name = gemtext
-                        })
-                        local jsonData = HttpService:JSONEncode(unitData)
-                        writefile("Clematis_Save/Unit_Cache.json", jsonData)
+                            local filePath = "Clematis_Save/Unit_Cache.json"
+                            local HttpService = game:GetService("HttpService")
+
+                            if not isfolder("Clematis_Save") then
+                                makefolder("Clematis_Save")
+                            end
+
+                            local unitData = {{ Name = gemtext }}
+                            local jsonData = HttpService:JSONEncode(unitData)
+                            writefile(filePath, jsonData)
                         end)
-        
+
+                        if not success then
+                            warn("❌ Failed to save unit data: " .. tostring(message))
+                        end
                     end
+
                     savegemunit(textToCopy)
-                break
+                    break
+                end
             end
         end
     end
-end
 })
-local HttpService = game:GetService("HttpService")
-local jsonData
-local success, dataTable
-
-local readSuccess, readError = pcall(function()
-    jsonData = readfile("Clematis_Save/Unit_Cache.json")
-end)
-
-if not readSuccess then
-    warn("⚠️ Failed to read JSON file: " .. tostring(readError))
-    return
-end
-
-success, dataTable = pcall(function()
-    return HttpService:JSONDecode(jsonData)
-end)
 
 local filePath = "Clematis_Save/Unit_Cache.json"
 local HttpService = game:GetService("HttpService")
