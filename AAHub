@@ -558,6 +558,25 @@ success, dataTable = pcall(function()
     return HttpService:JSONDecode(jsonData)
 end)
 
+local filePath = "Clematis_Save/Unit_Cache.json"
+local HttpService = game:GetService("HttpService")
+
+if not pcall(function() readfile(filePath) end) then
+    warn("⚠️ JSON file not found. Creating a new one...")
+    
+    if not isfolder("Clematis_Save") then
+        makefolder("Clematis_Save")
+    end
+    
+    local defaultData = HttpService:JSONEncode({})
+    writefile(filePath, defaultData)
+end
+
+local jsonData = readfile(filePath)
+local success, dataTable = pcall(function()
+    return HttpService:JSONDecode(jsonData)
+end)
+
 if not success or type(dataTable) ~= "table" then
     warn("❌ JSON Decode failed or invalid format")
     return
