@@ -880,6 +880,8 @@ local savepowerfps = MiscTab:CreateInput({
 })
 
 _G.savingpower = false
+_G.psingfps = 10
+
 local savepower = MiscTab:CreateToggle({
     Name = functionsnamelist_en_th[24],
     CurrentValue = false,
@@ -896,11 +898,16 @@ local savepower = MiscTab:CreateToggle({
         local waveui = playerGui.Waves
 
         if _G.savingpower then
-            while _G.savingpower do
-                wait(10)
-                setfpscap(_G.psingfps)
-                print(_G.psingfps)
-            end
+            task.spawn(function()
+                while _G.savingpower do
+                    if _G.savingpower then
+                    setfpscap(_G.psingfps)
+                    end
+                    print("FPS set to: " .. _G.psingfps)
+                    task.wait(10)
+                end
+            end)
+
             runService:Set3dRenderingEnabled(false)
             otherui1.Visible = false
             otherui2.Visible = false
@@ -909,7 +916,6 @@ local savepower = MiscTab:CreateToggle({
                 repeat
                     task.wait(0.1)
                 until waveui.Enabled == true
-                
                 waveui.Enabled = false
             end)
             mainui.Position = UDim2.new(0.5, 0, -3, 0)
@@ -925,7 +931,6 @@ local savepower = MiscTab:CreateToggle({
                 repeat
                     task.wait(0.1)
                 until waveui.Enabled == false
-                
                 waveui.Enabled = true
             end)
             mainui.Position = UDim2.new(0.5, 0, -0.1, 0)
