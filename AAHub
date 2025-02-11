@@ -17,40 +17,44 @@ print([[
                             \|__|\|__|\|_______|\|_______|
 ----------------------------------------------------------------------------------------------- --
 ]])
-if not _G.thaimode then
-functionsnamelist_en_th = {
-    "Loaded!",
-    "Select Teleport Capsule",
-    "Select Map",
-    "Auto Farm Macro Mode",
-    "Auto Upgrade All Units",
-    "Auto Replay",
-    "Sell units at wave",
-    "Enable Auto Sell Unit",
-    "Main Notifier Webhook",
-    "Enable Main Webhook",
-    "Reserve Notifier Webhook",
-    "Reserve Notifier Webhook Delay (s)",
-    "Enable Reserve Webhook",
-    "Select Unit to farm",
-    "Copy Unit Id",
-    "Unit ID",
-    "Auto Farm Gems",
-    "Select Max Unit",
-    "Unit ID",
-    "Unit Location",
-    "Place At Wave",
-    "Hide Annoying Message",
-    "Show Gems",
-    "Power Saving Mode",
-    "Select Unit to get ID",
-    "Copy Unit Id",
-    "Copy Player Location Work With Unit",
-    "Run Debugger [Only Mobile Executor or PC Level 8+ Executor]",
-    "Run Old Debugger",
-}
+
+if _G.thaimode == nil then
+    _G.thaimode = false
 end
-if _G.thaimode == true then
+
+if not _G.thaimode then
+    functionsnamelist_en_th = {
+        "Loaded!",
+        "Select Teleport Capsule",
+        "Select Map",
+        "Auto Farm Macro Mode",
+        "Auto Upgrade All Units",
+        "Auto Replay",
+        "Sell units at wave",
+        "Enable Auto Sell Unit",
+        "Main Notifier Webhook",
+        "Enable Main Webhook",
+        "Reserve Notifier Webhook",
+        "Reserve Notifier Webhook Delay (s)",
+        "Enable Reserve Webhook",
+        "Select Unit to farm",
+        "Copy Unit Id",
+        "Unit ID",
+        "Auto Farm Gems",
+        "Select Max Unit",
+        "Unit ID",
+        "Unit Location",
+        "Place At Wave",
+        "Hide Annoying Message",
+        "Show Gems",
+        "Power Saving Mode",
+        "Select Unit to get ID",
+        "Copy Unit Id",
+        "Copy Player Location Work With Unit",
+        "Run Debugger [Only Mobile Executor or PC Level 8+ Executor]",
+        "Run Old Debugger",
+    }
+else
     functionsnamelist_en_th = {
         "Loaded! (โหลดเรียบร้อย!)",
         "Select Teleport Capsule (เลือกห้องที่จะวาร์ป)",
@@ -82,7 +86,8 @@ if _G.thaimode == true then
         "Run Debugger [Only Mobile Executor or PC Level 8+ Executor]",
         "Run Old Debugger (เปิดดีบั๊กตัวเก่า)",
     }
-    end
+end
+
 
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
@@ -132,7 +137,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local MainWindow = Rayfield:CreateWindow({
     Name = random_name,
     Icon = 0,
-    LoadingTitle = functionsnamelist_en_th[1],
+    LoadingTitle = functionsnamelist_en_th[1] or "Loading!",
     LoadingSubtitle = "Script By Seaweed_hunter",
     Theme = _G.theme,
     DisableRayfieldPrompts = false,
