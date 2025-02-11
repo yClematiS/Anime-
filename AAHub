@@ -91,8 +91,6 @@ else
     }
 end
 
-
-
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local rootPart = character:FindFirstChild("HumanoidRootPart")
@@ -137,7 +135,11 @@ local function startTypingAnimation3()
 end
 spawn(startTypingAnimation3)
 _G.theme = "Amethyst"
+wait(0.2)
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+print("Ui Lib Loaded")
+wait(1)
+print("Loading Function")
 local MainWindow = Rayfield:CreateWindow({
     Name = random_name,
     Icon = 0,
@@ -375,10 +377,10 @@ if v.Name == "_waves_started" then
     end,
     })
 
-    _G.autoreplay = false
+    _G.autoreplay = true
     local AutoReplay = MainTab:CreateToggle({
         Name = functionsnamelist_en_th[6],
-        CurrentValue = false,
+        CurrentValue = _G.autoreplay,
         Flag = "Auto_Replay",
         Callback = function(Value)
             _G.autoreplay = Value
@@ -877,13 +879,13 @@ local savepowerfps = MiscTab:CreateInput({
     end,
 })
 
-savingpower = false
+_G.savingpower = false
 local savepower = MiscTab:CreateToggle({
     Name = functionsnamelist_en_th[24],
     CurrentValue = false,
     Flag = "savepower",
     Callback = function(Value)
-        savingpower = Value
+        _G.savingpower = Value
         local playerGui = game:GetService("Players").LocalPlayer.PlayerGui
         local runService = game:GetService("RunService")
 
@@ -893,8 +895,12 @@ local savepower = MiscTab:CreateToggle({
         local mainui = playerGui.spawn_units.Lives.Frame.Resource
         local waveui = playerGui.Waves
 
-        if savingpower then
-            setfpscap(_G.psingfps)
+        if _G.savingpower then
+            while _G.savingpower do
+                wait(10)
+                setfpscap(_G.psingfps)
+                print(_G.psingfps)
+            end
             runService:Set3dRenderingEnabled(false)
             otherui1.Visible = false
             otherui2.Visible = false
@@ -1459,6 +1465,7 @@ if isUserIdWhitelisted or isShirtIdWhitelisted then
 	wait(0.5)
 local scriptURLs = {
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/AutoReconnectIfDis.lua",
+    "https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/Auto_replay_backup",
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/Drop_Notifier.lua",
     "https://raw.githubusercontent.com/Oak4Blood/AnimeAdventure/refs/heads/main/JoinNotifier.lua",
     "https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/Misc_Api",
