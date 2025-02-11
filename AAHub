@@ -25,69 +25,72 @@ end
 
 if not _G.thaimode then
     functionsnamelist_en_th = {
-        "Loaded!",
-        "Select Teleport Capsule",
-        "Select Map",
-        "Auto Farm Macro Mode",
-        "Auto Upgrade All Units",
-        "Auto Replay",
-        "Sell units at wave",
-        "Enable Auto Sell Unit",
-        "Main Notifier Webhook",
-        "Enable Main Webhook",
-        "Reserve Notifier Webhook",
-        "Reserve Notifier Webhook Delay (s)",
-        "Enable Reserve Webhook",
-        "Select Unit to farm",
-        "Copy Unit Id",
-        "Unit ID",
-        "Auto Farm Gems",
-        "Select Max Unit",
-        "Unit ID",
-        "Unit Location",
-        "Place At Wave",
-        "Hide Annoying Message",
-        "Show Gems",
-        "Power Saving Mode",
-        "Select Unit to get ID",
-        "Copy Unit Id",
-        "Copy Player Location Work With Unit",
-        "Run Debugger [Only Mobile Executor or PC Level 8+ Executor]",
-        "Run Old Debugger",
+        "Loaded!", --1
+        "Select Teleport Capsule", --2
+        "Select Map", --3
+        "Auto Farm Macro Mode", --4
+        "Auto Upgrade All Units", --5
+        "Auto Replay", --6
+        "Sell units at wave", --7
+        "Enable Auto Sell Unit", --8
+        "Main Notifier Webhook", --9
+        "Enable Main Webhook", --10
+        "Reserve Notifier Webhook", --11
+        "Reserve Notifier Webhook Delay (s)", --12
+        "Enable Reserve Webhook", --13
+        "Select Unit to farm", --14
+        "Copy Unit Id", --15
+        "Unit ID", --16
+        "Auto Farm Gems", --17
+        "Select Max Unit", --18
+        "Unit ID", --19
+        "Unit Location", --20
+        "Place At Wave", --21
+        "Hide Annoying Message", --22
+        "Show Gems", --23
+        "Power Saving Mode", --24
+        "Select Unit to get ID", --25
+        "Copy Unit Id", --26
+        "Copy Player Location Work With Unit", --27
+        "Run Debugger [Only Mobile Executor or PC Level 8+ Executor]", --28
+        "Run Old Debugger", --29
+        "Fps Cap On Power Saving Mode" --30
     }
 else
     functionsnamelist_en_th = {
-        "Loaded! (โหลดเรียบร้อย!)",
-        "Select Teleport Capsule (เลือกห้องที่จะวาร์ป)",
-        "Select Map (เลือกดานสำหรับมาโครโหมด)",
-        "Auto Farm Macro Mode (เริ่มทำงานมาโครโหมด)",
-        "Auto Upgrade All Units (อัพตัวในด่านอัตโนมัติ)",
-        "Auto Replay (เริ่มด่านใหม่อัตโนมัติ)",
-        "Sell units at wave (เลือกเวฟที่จะขายตัวละคร)",
-        "Enable Auto Sell Unit (เปิดการทำงานการขายตัวละคร)",
-        "Main Notifier Webhook (ลิ้งเว็ปฮุกหลัก)",
-        "Enable Main Webhook (เปิดการทำงานเว็ปฮุก)",
-        "Reserve Notifier Webhook (ลิ้งเว็ปฮุกรอง)",
-        "Reserve Notifier Webhook Delay (ตั้งดีเลย์เว็ปฮุกรอง วินาที)",
-        "Enable Reserve Webhook (เปิดการทำงานเว็ปฮุกรอง)",
-        "Select Unit to farm (เลือกตัวที่จะใช้ฟาร์ม)",
-        "Copy Unit Id (คัดลอกไอดีตัวที่จะใช้ฟาร์ม)",
-        "Unit ID (กรอก ID ตัวที่ใช้ฟาร์ม)",
-        "Auto Farm Gems (เปิดโหมดไก่เพรช)",
-        "Select Max Unit (เลือกจำนวนยูนิตสูงสุด)",
-        "Unit ID (ไอดี)",
-        "Unit Location (ตำแหน่ง)",
-        "Place At Wave (เวฟที่จะวาง)",
-        "Hide Annoying Message (ซ่อนการแจ้งเตือนน่ารำคาญ)",
-        "Show Gems (แสดงเพรช)",
-        "Power Saving Mode (โหมดประหยัดแบตเตอรี่)",
-        "Select Unit to get ID (เลือกตัวเพื่อหาไอดี)",
-        "Copy Unit Id (คัดลอกไอดี)",
-        "Copy Player Location Work With Unit (คัดลอกตำแหน่งที่ผู้เล่นยืน ใช้กับตำแหน่งวางตัวในมาโคร)",
-        "Run Debugger [Only Mobile Executor or PC Level 8+ Executor]",
-        "Run Old Debugger (เปิดดีบั๊กตัวเก่า)",
+        "Loaded! (โหลดเรียบร้อย!)", --1
+        "Select Teleport Capsule (เลือกห้องที่จะวาร์ป)", --2
+        "Select Map (เลือกดานสำหรับมาโครโหมด)", --3
+        "Auto Farm Macro Mode (เริ่มทำงานมาโครโหมด)", --4
+        "Auto Upgrade All Units (อัพตัวในด่านอัตโนมัติ)", --5
+        "Auto Replay (เริ่มด่านใหม่อัตโนมัติ)", --6
+        "Sell units at wave (เลือกเวฟที่จะขายตัวละคร)", --7
+        "Enable Auto Sell Unit (เปิดการทำงานการขายตัวละคร)", --8
+        "Main Notifier Webhook (ลิ้งเว็ปฮุกหลัก)", --9
+        "Enable Main Webhook (เปิดการทำงานเว็ปฮุก)", --10
+        "Reserve Notifier Webhook (ลิ้งเว็ปฮุกรอง)", --11
+        "Reserve Notifier Webhook Delay (ตั้งดีเลย์เว็ปฮุกรอง วินาที)", --12
+        "Enable Reserve Webhook (เปิดการทำงานเว็ปฮุกรอง)", --13
+        "Select Unit to farm (เลือกตัวที่จะใช้ฟาร์ม)", --14
+        "Copy Unit Id (คัดลอกไอดีตัวที่จะใช้ฟาร์ม)", --15
+        "Unit ID (กรอก ID ตัวที่ใช้ฟาร์ม)", --16
+        "Auto Farm Gems (เปิดโหมดไก่เพรช)", --17
+        "Select Max Unit (เลือกจำนวนยูนิตสูงสุด)", --18
+        "Unit ID (ไอดี)", --19
+        "Unit Location (ตำแหน่ง)", --20
+        "Place At Wave (เวฟที่จะวาง)", --21
+        "Hide Annoying Message (ซ่อนการแจ้งเตือนน่ารำคาญ)", --22
+        "Show Gems (แสดงเพรช)", --23
+        "Power Saving Mode (โหมดประหยัดแบตเตอรี่)", --24
+        "Select Unit to get ID (เลือกตัวเพื่อหาไอดี)", --25
+        "Copy Unit Id (คัดลอกไอดี)", --26
+        "Copy Player Location Work With Unit (คัดลอกตำแหน่งที่ผู้เล่นยืน ใช้กับตำแหน่งวางตัวในมาโคร)", --27
+        "Run Debugger [Only Mobile Executor or PC Level 8+ Executor]", --28
+        "Run Old Debugger (เปิดดีบั๊กตัวเก่า)", --29
+        "Fps Cap On Power Saving Mode (เฟรมเรทตอนอยู่ในโหมดประหยัดพลังงาน)" --30
     }
 end
+
 
 
 local player = game.Players.LocalPlayer
@@ -862,6 +865,18 @@ local ShowGemToggle = MiscTab:CreateToggle({
     end,
 })
 
+_G.psingfps = 10
+local savepowerfps = MiscTab:CreateInput({
+    Name = functionsnamelist_en_th[30],
+    CurrentValue = "",
+    PlaceholderText = "Input Number",
+    RemoveTextAfterFocusLost = false,
+    Flag = "psingfps",
+    Callback = function(psingfps)
+        _G.psingfps = tonumber(psingfps)
+    end,
+})
+
 savingpower = false
 local savepower = MiscTab:CreateToggle({
     Name = functionsnamelist_en_th[24],
@@ -879,12 +894,18 @@ local savepower = MiscTab:CreateToggle({
         local waveui = playerGui.Waves
 
         if savingpower then
-            setfpscap(10)
+            setfpscap(_G.psingfps)
             runService:Set3dRenderingEnabled(false)
             otherui1.Visible = false
             otherui2.Visible = false
             otherui3.Visible = false
-            waveui.Enabled = false
+            task.spawn(function()
+                repeat
+                    task.wait(0.1)
+                until waveui.Enabled == true
+                
+                waveui.Enabled = false
+            end)
             mainui.Position = UDim2.new(0.5, 0, -3, 0)
             mainui.Size = UDim2.new(5, 0, 1.5, 0)
             createFPSDisplay()
@@ -894,7 +915,13 @@ local savepower = MiscTab:CreateToggle({
             otherui1.Visible = true
             otherui2.Visible = true
             otherui3.Visible = true
-            waveui.Enabled = true
+            task.spawn(function()
+                repeat
+                    task.wait(0.1)
+                until waveui.Enabled == false
+                
+                waveui.Enabled = true
+            end)
             mainui.Position = UDim2.new(0.5, 0, -0.1, 0)
             mainui.Size = UDim2.new(1, 0, 0.35, 0)
 
