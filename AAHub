@@ -851,7 +851,7 @@ local savepower = MiscTab:CreateToggle({
             local otherui3 = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Main
             local mainui = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Frame.Resource
             local waveui = game:GetService("Players").LocalPlayer.PlayerGui.Waves
-            setfpscap(5)
+            setfpscap(10)
             game:GetService("RunService"):Set3dRenderingEnabled(false)
             otherui1.Visible = false
             otherui2.Visible = false
