@@ -877,13 +877,13 @@ local savepowerfps = MiscTab:CreateInput({
     end,
 })
 
-savingpower = false
+_G.savingpower = false
 local savepower = MiscTab:CreateToggle({
     Name = functionsnamelist_en_th[24],
     CurrentValue = false,
     Flag = "savepower",
     Callback = function(Value)
-        savingpower = Value
+        _G.savingpower = Value
         local playerGui = game:GetService("Players").LocalPlayer.PlayerGui
         local runService = game:GetService("RunService")
 
@@ -893,8 +893,12 @@ local savepower = MiscTab:CreateToggle({
         local mainui = playerGui.spawn_units.Lives.Frame.Resource
         local waveui = playerGui.Waves
 
-        if savingpower then
-            setfpscap(_G.psingfps)
+        if _G.savingpower then
+            while _G.savingpower do
+                wait(10)
+                setfpscap(_G.psingfps)
+                print(_G.psingfps)
+            end
             runService:Set3dRenderingEnabled(false)
             otherui1.Visible = false
             otherui2.Visible = false
