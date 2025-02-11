@@ -19,6 +19,7 @@ print([[
 ]])
 
 if _G.thaimode == nil then
+    print("thaimode not found running in en mode")
     _G.thaimode = false
 end
 
@@ -257,6 +258,12 @@ function farmnoti()
             Duration = 2,
             Image = 4483362458,
         })
+        local StarterGui = game:GetService("StarterGui")
+            StarterGui:SetCore("SendNotification", {
+                Title = "🎉 Aiweed",
+                Text = "Farm Status : ".. tostring(_G.isfarming) .. " Starting in 5 Second you can disable on countdown",
+                Duration = 5
+            })
     else
         Rayfield:Notify({
             Title = "Aiweed",
@@ -264,6 +271,12 @@ function farmnoti()
             Duration = 2,
             Image = 4483362458,
         })
+        local StarterGui = game:GetService("StarterGui")
+            StarterGui:SetCore("SendNotification", {
+                Title = "🎉 Aiweed",
+                Text = "Farm Status : ".. tostring(_G.isfarming) .. " Stopped Farm",
+                Duration = 5
+            })
         end
 end
 
@@ -653,9 +666,15 @@ local GemFarm_Toggle = GemFarm:CreateToggle({
         Duration = 3,
         Image = 4483362458,
     })
-    wait(10)
+    local StarterGui = game:GetService("StarterGui")
+            StarterGui:SetCore("SendNotification", {
+                Title = "🎉 Aiweed",
+                Text = "Gem Farm Status : ".. tostring(_G.isgemfarming),
+                Duration = 5
+            })
+    wait(5)
     local gemgmaae = workspace
-for i, v in pairs(gemgmaae:GetChildren()) do
+    for i, v in pairs(gemgmaae:GetChildren()) do
     if v.Name == "weather" then
     if _G.isgemfarming then
     print("Farming: ".. tostring(Value))
@@ -862,24 +881,20 @@ local savepower = MiscTab:CreateToggle({
         if savingpower then
             setfpscap(10)
             runService:Set3dRenderingEnabled(false)
-
             otherui1.Visible = false
             otherui2.Visible = false
             otherui3.Visible = false
             waveui.Enabled = false
-
             mainui.Position = UDim2.new(0.5, 0, -3, 0)
             mainui.Size = UDim2.new(5, 0, 1.5, 0)
             createFPSDisplay()
         else
             setfpscap(60)
             runService:Set3dRenderingEnabled(true)
-
             otherui1.Visible = true
             otherui2.Visible = true
             otherui3.Visible = true
             waveui.Enabled = true
-
             mainui.Position = UDim2.new(0.5, 0, -0.1, 0)
             mainui.Size = UDim2.new(1, 0, 0.35, 0)
 
@@ -1319,6 +1334,8 @@ while _G.searcherayfield and not foundray do
             foundray = true
             _G.searcherayfield = false
             
+            rayfie.Enabled = false
+
             local player = game:GetService("Players").LocalPlayer
             local playerGui = player:FindFirstChild("PlayerGui")
             if not playerGui then
@@ -1348,15 +1365,15 @@ while _G.searcherayfield and not foundray do
 
             button.MouseButton1Click:Connect(function()
                 isEnabled = not isEnabled
-                button.Image = isEnabled and "http://www.roblox.com/asset/?id=83415391084673" or "http://www.roblox.com/asset/?id=83415391084673"
-                frame.BackgroundColor3 = isEnabled and Color3.fromRGB(255, 0, 0) or Color3.fromRGB(0, 255, 0)
                 rayfie.Enabled = isEnabled
+                frame.BackgroundColor3 = isEnabled and Color3.fromRGB(255, 0, 0) or Color3.fromRGB(0, 255, 0)
             end)
             
             break
         end
     end
 end
+
 
 Rayfield:LoadConfiguration()
 
