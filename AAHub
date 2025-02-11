@@ -845,37 +845,91 @@ local savepower = MiscTab:CreateToggle({
     Flag = "savepower",
     Callback = function(Value)
         savingpower = Value
+        local playerGui = game:GetService("Players").LocalPlayer.PlayerGui
+        local runService = game:GetService("RunService")
+
+        local otherui1 = playerGui.spawn_units.Lives.Frame.LimitBreaks
+        local otherui2 = playerGui.spawn_units.Lives.Frame.Units
+        local otherui3 = playerGui.spawn_units.Lives.Main
+        local mainui = playerGui.spawn_units.Lives.Frame.Resource
+        local waveui = playerGui.Waves
+
         if savingpower then
-            local otherui1 = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Frame.LimitBreaks
-            local otherui2 = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Frame.Units
-            local otherui3 = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Main
-            local mainui = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Frame.Resource
-            local waveui = game:GetService("Players").LocalPlayer.PlayerGui.Waves
             setfpscap(10)
-            game:GetService("RunService"):Set3dRenderingEnabled(false)
+            runService:Set3dRenderingEnabled(false)
+
             otherui1.Visible = false
             otherui2.Visible = false
             otherui3.Visible = false
             waveui.Enabled = false
+
             mainui.Position = UDim2.new(0.5, 0, -3, 0)
             mainui.Size = UDim2.new(5, 0, 1.5, 0)
-        elseif not savingpower then
-            local otherui1 = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Frame.LimitBreaks
-            local otherui2 = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Frame.Units
-            local otherui3 = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Main
-            local mainui = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Frame.Resource
-            local waveui = game:GetService("Players").LocalPlayer.PlayerGui.Waves
+            createFPSDisplay()
+        else
             setfpscap(60)
-            game:GetService("RunService"):Set3dRenderingEnabled(true)
+            runService:Set3dRenderingEnabled(true)
+
             otherui1.Visible = true
             otherui2.Visible = true
             otherui3.Visible = true
             waveui.Enabled = true
+
             mainui.Position = UDim2.new(0.5, 0, -0.1, 0)
             mainui.Size = UDim2.new(1, 0, 0.35, 0)
+
+            removeFPSDisplay()
         end
     end,
 })
+
+local displayfpsui, fpsLabel, fpsConnection
+
+function createFPSDisplay()
+    if not displayfpsui then
+        displayfpsui = Instance.new("ScreenGui")
+        displayfpsui.Name = "displayfpsui"
+        displayfpsui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+        fpsLabel = Instance.new("TextLabel")
+        fpsLabel.Parent = displayfpsui
+        fpsLabel.Size = UDim2.new(0, 150, 0, 40)
+        fpsLabel.Position = UDim2.new(0.5, -75, 0.8, -50)
+        fpsLabel.BackgroundTransparency = 0.5
+        fpsLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        fpsLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        fpsLabel.Font = Enum.Font.SourceSansBold
+        fpsLabel.TextSize = 20
+        fpsLabel.Text = "FPS: 60"
+    end
+
+    local lastTime = tick()
+    local frameCount = 0
+    local runService = game:GetService("RunService")
+
+    fpsConnection = runService.RenderStepped:Connect(function()
+        frameCount = frameCount + 1
+        local currentTime = tick()
+
+        if currentTime - lastTime >= 1 then
+            fpsLabel.Text = "FPS: " .. frameCount
+            frameCount = 0
+            lastTime = currentTime
+        end
+    end)
+end
+
+function removeFPSDisplay()
+    if fpsConnection then
+        fpsConnection:Disconnect()
+        fpsConnection = nil
+    end
+    if displayfpsui then
+        displayfpsui:Destroy()
+        displayfpsui = nil
+    end
+end
+
 
 local Debugger = MainWindow:CreateTab("Unit Debugger")
 
