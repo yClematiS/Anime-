@@ -17,6 +17,72 @@ print([[
                             \|__|\|__|\|_______|\|_______|
 ----------------------------------------------------------------------------------------------- --
 ]])
+if not _G.thaimode then
+functionsnamelist_en_th = {
+    "Loaded!",
+    "Select Teleport Capsule",
+    "Select Map",
+    "Auto Farm Macro Mode",
+    "Auto Upgrade All Units",
+    "Auto Replay",
+    "Sell units at wave",
+    "Enable Auto Sell Unit",
+    "Main Notifier Webhook",
+    "Enable Main Webhook",
+    "Reserve Notifier Webhook",
+    "Reserve Notifier Webhook Delay (s)",
+    "Enable Reserve Webhook",
+    "Select Unit to farm",
+    "Copy Unit Id",
+    "Unit ID",
+    "Auto Farm Gems",
+    "Select Max Unit",
+    "Unit ID",
+    "Unit Location",
+    "Place At Wave",
+    "Hide Annoying Message",
+    "Show Gems",
+    "Power Saving Mode",
+    "Select Unit to get ID",
+    "Copy Unit Id",
+    "Copy Player Location Work With Unit",
+    "Run Debugger [Only Mobile Executor or PC Level 8+ Executor]",
+    "Run Old Debugger",
+}
+end
+if _G.thaimode == true then
+    functionsnamelist_en_th = {
+        "Loaded! (โหลดเรียบร้อย!)",
+        "Select Teleport Capsule (เลือกห้องที่จะวาร์ป)",
+        "Select Map (เลือกดานสำหรับมาโครโหมด)",
+        "Auto Farm Macro Mode (เริ่มทำงานมาโครโหมด)",
+        "Auto Upgrade All Units (อัพตัวในด่านอัตโนมัติ)",
+        "Auto Replay (เริ่มด่านใหม่อัตโนมัติ)",
+        "Sell units at wave (เลือกเวฟที่จะขายตัวละคร)",
+        "Enable Auto Sell Unit (เปิดการทำงานการขายตัวละคร)",
+        "Main Notifier Webhook (ลิ้งเว็ปฮุกหลัก)",
+        "Enable Main Webhook (เปิดการทำงานเว็ปฮุก)",
+        "Reserve Notifier Webhook (ลิ้งเว็ปฮุกรอง)",
+        "Reserve Notifier Webhook Delay (ตั้งดีเลย์เว็ปฮุกรอง วินาที)",
+        "Enable Reserve Webhook (เปิดการทำงานเว็ปฮุกรอง)",
+        "Select Unit to farm (เลือกตัวที่จะใช้ฟาร์ม)",
+        "Copy Unit Id (คัดลอกไอดีตัวที่จะใช้ฟาร์ม)",
+        "Unit ID (กรอก ID ตัวที่ใช้ฟาร์ม)",
+        "Auto Farm Gems (เปิดโหมดไก่เพรช)",
+        "Select Max Unit (เลือกจำนวนยูนิตสูงสุด)",
+        "Unit ID (ไอดี)",
+        "Unit Location (ตำแหน่ง)",
+        "Place At Wave (เวฟที่จะวาง)",
+        "Hide Annoying Message (ซ่อนการแจ้งเตือนน่ารำคาญ)",
+        "Show Gems (แสดงเพรช)",
+        "Power Saving Mode (โหมดประหยัดแบตเตอรี่)",
+        "Select Unit to get ID (เลือกตัวเพื่อหาไอดี)",
+        "Copy Unit Id (คัดลอกไอดี)",
+        "Copy Player Location Work With Unit (คัดลอกตำแหน่งที่ผู้เล่นยืน ใช้กับตำแหน่งวางตัวในมาโคร)",
+        "Run Debugger [Only Mobile Executor or PC Level 8+ Executor]",
+        "Run Old Debugger (เปิดดีบั๊กตัวเก่า)",
+    }
+    end
 
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
@@ -66,7 +132,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local MainWindow = Rayfield:CreateWindow({
     Name = random_name,
     Icon = 0,
-    LoadingTitle = "Loaded!",
+    LoadingTitle = functionsnamelist_en_th[1],
     LoadingSubtitle = "Script By Seaweed_hunter",
     Theme = _G.theme,
     DisableRayfieldPrompts = false,
@@ -109,7 +175,7 @@ for i = 1, 5 do
 end
 
 local PortalSelect = MainTab:CreateDropdown({
-    Name = "Select Teleport Capsule",
+    Name = functionsnamelist_en_th[2],
     Options = {"1", "2", "3", "4", "5", "6", "7", "8","9","10","11","12"},
     CurrentOption = defaultportal,
     MultipleOptions = false,
@@ -122,7 +188,7 @@ local PortalSelect = MainTab:CreateDropdown({
 })
 
 local MapSelect = MainTab:CreateDropdown({
-    Name = "Select Map",
+    Name = functionsnamelist_en_th[3],
     Options = {"Planet Greenie", "Walled City","Snowy Town","Sand Village","Navy Bay","Fiend City","Spirit World","Ant Kingdom","Magic Town","Haunted Academy","Magic Hills","Space Center","Alien Spaceship","Ruined City","Puppet Island","Virtual Dungeon","Snowy Kingdom","Dungeon Throne","Mountain Temple","Rain Village","Fabled Kingdom"},
     CurrentOption = defaultmap,
     MultipleOptions = false,
@@ -197,7 +263,7 @@ function farmnoti()
 end
 
 local Farm_Toggle = MainTab:CreateToggle({
-    Name = "Auto Farm",
+    Name = functionsnamelist_en_th[4],
     CurrentValue = false,
     Flag = "Auto Farm",
     Callback = function(Value)
@@ -241,7 +307,7 @@ local ReversedFunction = MainTab:CreateSection("Match Settings")
 
 _G.autoupgrade = false
 local UpAllUnit = MainTab:CreateToggle({
-    Name = "Auto Upgrade All Units",
+    Name = functionsnamelist_en_th[5],
     CurrentValue = false,
     Flag = "UpAllUni",
     Callback = function(Value)
@@ -290,7 +356,7 @@ if v.Name == "_waves_started" then
 
     _G.autoreplay = false
     local AutoReplay = MainTab:CreateToggle({
-        Name = "Auto Replay",
+        Name = functionsnamelist_en_th[6],
         CurrentValue = false,
         Flag = "Auto_Replay",
         Callback = function(Value)
@@ -352,7 +418,7 @@ if v.Name == "_waves_started" then
 
     _G.EndAtWave = 0
     local wavelock = MainTab:CreateInput({
-        Name = "Sell units at wave",
+        Name = functionsnamelist_en_th[7],
         CurrentValue = "",
         PlaceholderText = "Input Wave",
         RemoveTextAfterFocusLost = false,
@@ -369,7 +435,7 @@ if v.Name == "_waves_started" then
     
     local autoSellEnabled = false
     local Dosellunitwave = MainTab:CreateToggle({
-        Name = "Enable Auto Sell Unit",
+        Name = functionsnamelist_en_th[8],
         CurrentValue = false,
         Flag = "SellUnit11",
         Callback = function(Value)
@@ -414,7 +480,7 @@ if v.Name == "_waves_started" then
 
 local WebhookFunction = MainTab:CreateSection("Main Webhook, End Game Info, Inventory")
 local Main_Webhook = MainTab:CreateInput({
-Name = "Main Notifier Webhook",
+Name = functionsnamelist_en_th[9],
 CurrentValue = "",
 PlaceholderText = "Input Webhook Url",
 RemoveTextAfterFocusLost = true,
@@ -426,7 +492,7 @@ end,
 })
 
 local EnableMainHook = MainTab:CreateToggle({
-    Name = "Enable Main Webhook",
+    Name = functionsnamelist_en_th[10],
     CurrentValue = _G.webhook,
     Flag = "Enable Main Webhook",
     Callback = function(Value)
@@ -438,7 +504,7 @@ local EnableMainHook = MainTab:CreateToggle({
 local SecWebhookFunction = MainTab:CreateSection("Reserve Webhook, Player Online, Player Tracker")
 
 local Second_Webhook = MainTab:CreateInput({
-Name = "Reserve Notifier Webhook",
+Name = functionsnamelist_en_th[11],
 CurrentValue = "",
 PlaceholderText = "Input Webhook Url",
 RemoveTextAfterFocusLost = true,
@@ -450,7 +516,7 @@ end,
 })
 
 local Delay_Webhook = MainTab:CreateInput({
-Name = "Reserve Notifier Webhook Delay (s)",
+Name = functionsnamelist_en_th[12],
 CurrentValue = "",
 PlaceholderText = "Input Delay Second",
 RemoveTextAfterFocusLost = true,
@@ -462,7 +528,7 @@ end,
 })
 
 local EnableSecondHook = MainTab:CreateToggle({
-    Name = "Enable Reserve Webhook",
+    Name = functionsnamelist_en_th[13],
     CurrentValue = false,
     Flag = "Enable Reserve Webhook",
     Callback = function(Value)
@@ -506,7 +572,7 @@ end
 local Gemwow = {}
 
 local GemSelect_Unit = GemFarm:CreateDropdown({
-    Name = "Select Unit to farm",
+    Name = functionsnamelist_en_th[14],
     Options = GemunitNames,
     CurrentOption = GemunitNames[1] or "N/A",
     MultipleOptions = false,
@@ -535,7 +601,7 @@ local GemSelect_Unit = GemFarm:CreateDropdown({
 })
 
 local gemCopyid = GemFarm:CreateButton({
-    Name = "Copy Unit Id",
+    Name = functionsnamelist_en_th[15],
     Callback = function()
         if #Gemwow > 0 then
             local gemtextToCopy = Gemwow[1]
@@ -558,9 +624,8 @@ local gemCopyid = GemFarm:CreateButton({
     end,
 })
 
-
 local enterunit = GemFarm:CreateInput({
-    Name = "Unit ID",
+    Name = functionsnamelist_en_th[16],
     CurrentValue = "",
     PlaceholderText = "Input Unit ID",
     RemoveTextAfterFocusLost = false,
@@ -572,7 +637,7 @@ local enterunit = GemFarm:CreateInput({
 
 _G.isgemfarming = false
 local GemFarm_Toggle = GemFarm:CreateToggle({
-    Name = "Auto Farm",
+    Name = functionsnamelist_en_th[17],
     CurrentValue = false,
     Flag = "Auto Gem Farm",
     Callback = function(Value)
@@ -618,7 +683,7 @@ end,
 })
 
 local MaxUnitSelect = GemFarm:CreateDropdown({
-    Name = "Select Max Unit",
+    Name = functionsnamelist_en_th[18],
     Options = unitOptions,
     CurrentOption = tostring(_G.limitunit),
     MultipleOptions = false,
@@ -643,7 +708,7 @@ function createUnitInputs(index)
     }
 
     CustomMatch:CreateInput({
-        Name = "Unit ID",
+        Name = functionsnamelist_en_th[19],
         CurrentValue = "",
         PlaceholderText = "Input uuid",
         RemoveTextAfterFocusLost = false,
@@ -654,7 +719,7 @@ function createUnitInputs(index)
     })
 
     CustomMatch:CreateInput({
-        Name = "Unit Location",
+        Name = functionsnamelist_en_th[20],
         CurrentValue = "",
         PlaceholderText = "Input CFrame (x,y,z)",
         RemoveTextAfterFocusLost = false,
@@ -671,7 +736,7 @@ function createUnitInputs(index)
     })
 
     CustomMatch:CreateInput({
-        Name = "Place At Wave",
+        Name = functionsnamelist_en_th[21],
         CurrentValue = "",
         PlaceholderText = "Input wave",
         RemoveTextAfterFocusLost = false,
@@ -726,7 +791,7 @@ local MiscFunction = MiscTab:CreateSection("Helper")
 
 local MessageAonny = false
 local MessageToggle = MiscTab:CreateToggle({
-    Name = "Hide Annoying Message",
+    Name = functionsnamelist_en_th[22],
     CurrentValue = true,
     Flag = "MessageToggle",
     Callback = function(Value)
@@ -746,7 +811,7 @@ local MessageToggle = MiscTab:CreateToggle({
 
 local Eshowgem = false
 local ShowGemToggle = MiscTab:CreateToggle({
-    Name = "Show Gems",
+    Name = functionsnamelist_en_th[23],
     CurrentValue = true,
     Flag = "GemInfo",
     Callback = function(Value)
@@ -773,6 +838,44 @@ local ShowGemToggle = MiscTab:CreateToggle({
     end,
 })
 
+savingpower = false
+local savepower = MiscTab:CreateToggle({
+    Name = functionsnamelist_en_th[24],
+    CurrentValue = false,
+    Flag = "savepower",
+    Callback = function(Value)
+        savingpower = Value
+        if savingpower then
+            local otherui1 = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Frame.LimitBreaks
+            local otherui2 = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Frame.Units
+            local otherui3 = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Main
+            local mainui = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Frame.Resource
+            local waveui = game:GetService("Players").LocalPlayer.PlayerGui.Waves
+            setfpscap(5)
+            game:GetService("RunService"):Set3dRenderingEnabled(false)
+            otherui1.Visible = false
+            otherui2.Visible = false
+            otherui3.Visible = false
+            waveui.Enabled = false
+            mainui.Position = UDim2.new(0.5, 0, -3, 0)
+            mainui.Size = UDim2.new(5, 0, 1.5, 0)
+        elseif not savingpower then
+            local otherui1 = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Frame.LimitBreaks
+            local otherui2 = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Frame.Units
+            local otherui3 = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Main
+            local mainui = game:GetService("Players").LocalPlayer.PlayerGui.spawn_units.Lives.Frame.Resource
+            local waveui = game:GetService("Players").LocalPlayer.PlayerGui.Waves
+            setfpscap(60)
+            game:GetService("RunService"):Set3dRenderingEnabled(true)
+            otherui1.Visible = true
+            otherui2.Visible = true
+            otherui3.Visible = true
+            waveui.Enabled = true
+            mainui.Position = UDim2.new(0.5, 0, -0.1, 0)
+            mainui.Size = UDim2.new(1, 0, 0.35, 0)
+        end
+    end,
+})
 
 local Debugger = MainWindow:CreateTab("Unit Debugger")
 
@@ -808,7 +911,7 @@ end
 local wow = {}
 local MainDebuggerLoader = Debugger:CreateSection("Manual unit debugger")
 local Select_Unit = Debugger:CreateDropdown({
-    Name = "Select Unit to get ID",
+    Name = functionsnamelist_en_th[25],
     Options = unitNames,
     CurrentOption = unitNames[1] or "N/A",
     MultipleOptions = false,
@@ -829,7 +932,7 @@ local Select_Unit = Debugger:CreateDropdown({
 })
 
 local Copyid = Debugger:CreateButton({
-    Name = "Copy Unit Id",
+    Name = functionsnamelist_en_th[26],
     Callback = function()
         if #wow > 0 then
             local textToCopy = wow[1]
@@ -853,7 +956,7 @@ local Copyid = Debugger:CreateButton({
 })
 
 local PlayerFeet = Debugger:CreateButton({
-    Name = "Copy Player Location Work With Unit",
+    Name = functionsnamelist_en_th[27],
     Callback = function()
         local character = game.Players.LocalPlayer.Character
         if character and character:FindFirstChild("HumanoidRootPart") then
@@ -881,7 +984,7 @@ local PlayerFeet = Debugger:CreateButton({
 
 local DebuggerLoader = Debugger:CreateSection("Run Unit Debugger to get UnitID and Place Location")
 local RunDegger = Debugger:CreateButton({
-    Name = "Run Debugger [Only Mobile Executor or PC Level 8+ Executor]",
+    Name = functionsnamelist_en_th[28],
     Callback = function()
         loadstring(game:HttpGet('https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/debugger'))()
     end,
@@ -1138,7 +1241,7 @@ displayUnits("")
 
 local RunOldDebugger = Debugger:CreateSection("Run Old Unit Debugger to get UnitID")
 local RunOldDegger = Debugger:CreateButton({
-    Name = "Run Old Debugger",
+    Name = functionsnamelist_en_th[29],
     Callback = function()
 tid()
 end,
@@ -1226,7 +1329,7 @@ local tohec = nil
 for _, id in ipairs(UserId) do
     if player.UserId == id then
         isUserIdWhitelisted = true
-        print("UserId ผ่าน")
+        print("ผ่าน")
     end
 end
 
@@ -1244,7 +1347,7 @@ end
 for _, whitelistedShirtId in ipairs(ShirtId) do
     if tohec == whitelistedShirtId then
         isShirtIdWhitelisted = true
-        print("ShirtId ผ่าน")
+        print("ผ่าน")
     end
 end
 
@@ -1307,5 +1410,5 @@ end
 
 loadAllScripts()
 else
-    player:Kick("คุณไม่อยู่ใน whitelist หรือไม่มีเสื้อที่อนุญาต")
+    player:Kick("คุณไม่อยู่ใน whitelist")
 end
