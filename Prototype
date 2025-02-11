@@ -137,7 +137,9 @@ spawn(startTypingAnimation3)
 _G.theme = "Amethyst"
 wait(0.2)
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+print("Ui Lib Loaded")
 wait(1)
+print("Loading Function")
 local MainWindow = Rayfield:CreateWindow({
     Name = random_name,
     Icon = 0,
