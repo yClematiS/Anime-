@@ -894,6 +894,8 @@ local savepower = MiscTab:CreateToggle({
         local otherui1 = playerGui.spawn_units.Lives.Frame.LimitBreaks
         local otherui2 = playerGui.spawn_units.Lives.Frame.Units
         local otherui3 = playerGui.spawn_units.Lives.Main
+        local hideyen = playerGui.spawn_units.Lives.Frame.Resource.Money
+        local showgold = playerGui.spawn_units.Lives.Frame.Resource.Gold
         local mainui = playerGui.spawn_units.Lives.Frame.Resource
         local waveui = playerGui.Waves
 
@@ -912,6 +914,8 @@ local savepower = MiscTab:CreateToggle({
             otherui1.Visible = false
             otherui2.Visible = false
             otherui3.Visible = false
+            hideyen.Visible = false
+            showgold.Visible = true
             task.spawn(function()
                 repeat
                     task.wait(0.1)
@@ -927,6 +931,8 @@ local savepower = MiscTab:CreateToggle({
             otherui1.Visible = true
             otherui2.Visible = true
             otherui3.Visible = true
+            hideyen.Visible = true
+            showgold.Visible = false
             task.spawn(function()
                 repeat
                     task.wait(0.1)
