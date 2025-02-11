@@ -141,7 +141,7 @@ print("Ui Lib Loaded")
 wait(1)
 print("Loading Function")
 local MainWindow = Rayfield:CreateWindow({
-    Name = random_name,
+    Name = random_name or "Clematis Hub | Err Loading | Session : ( Error! )",
     Icon = 0,
     LoadingTitle = functionsnamelist_en_th[1] or "Loading!",
     LoadingSubtitle = "Script By Seaweed_hunter",
@@ -186,7 +186,7 @@ for i = 1, 5 do
 end
 
 local PortalSelect = MainTab:CreateDropdown({
-    Name = functionsnamelist_en_th[2],
+    Name = functionsnamelist_en_th[2] or "Error Rejoin",
     Options = {"1", "2", "3", "4", "5", "6", "7", "8","9","10","11","12"},
     CurrentOption = defaultportal,
     MultipleOptions = false,
@@ -199,7 +199,7 @@ local PortalSelect = MainTab:CreateDropdown({
 })
 
 local MapSelect = MainTab:CreateDropdown({
-    Name = functionsnamelist_en_th[3],
+    Name = functionsnamelist_en_th[3] or "Error Rejoin",
     Options = {"Planet Greenie", "Walled City","Snowy Town","Sand Village","Navy Bay","Fiend City","Spirit World","Ant Kingdom","Magic Town","Haunted Academy","Magic Hills","Space Center","Alien Spaceship","Ruined City","Puppet Island","Virtual Dungeon","Snowy Kingdom","Dungeon Throne","Mountain Temple","Rain Village","Fabled Kingdom"},
     CurrentOption = defaultmap,
     MultipleOptions = false,
@@ -286,7 +286,7 @@ function farmnoti()
 end
 
 local Farm_Toggle = MainTab:CreateToggle({
-    Name = functionsnamelist_en_th[4],
+    Name = functionsnamelist_en_th[4] or "Error Rejoin",
     CurrentValue = false,
     Flag = "Auto Farm",
     Callback = function(Value)
@@ -330,7 +330,7 @@ local ReversedFunction = MainTab:CreateSection("Match Settings")
 
 _G.autoupgrade = false
 local UpAllUnit = MainTab:CreateToggle({
-    Name = functionsnamelist_en_th[5],
+    Name = functionsnamelist_en_th[5] or "Error Rejoin",
     CurrentValue = false,
     Flag = "UpAllUni",
     Callback = function(Value)
@@ -379,7 +379,7 @@ if v.Name == "_waves_started" then
 
     _G.autoreplay = true
     local AutoReplay = MainTab:CreateToggle({
-        Name = functionsnamelist_en_th[6],
+        Name = functionsnamelist_en_th[6] or "Error Rejoin",
         CurrentValue = _G.autoreplay,
         Flag = "Auto_Replay",
         Callback = function(Value)
@@ -441,7 +441,7 @@ if v.Name == "_waves_started" then
 
     _G.EndAtWave = 0
     local wavelock = MainTab:CreateInput({
-        Name = functionsnamelist_en_th[7],
+        Name = functionsnamelist_en_th[7] or "Error Rejoin",
         CurrentValue = "",
         PlaceholderText = "Input Wave",
         RemoveTextAfterFocusLost = false,
@@ -458,7 +458,7 @@ if v.Name == "_waves_started" then
     
     local autoSellEnabled = false
     local Dosellunitwave = MainTab:CreateToggle({
-        Name = functionsnamelist_en_th[8],
+        Name = functionsnamelist_en_th[8] or "Error Rejoin",
         CurrentValue = false,
         Flag = "SellUnit11",
         Callback = function(Value)
@@ -503,7 +503,7 @@ if v.Name == "_waves_started" then
 
 local WebhookFunction = MainTab:CreateSection("Main Webhook, End Game Info, Inventory")
 local Main_Webhook = MainTab:CreateInput({
-Name = functionsnamelist_en_th[9],
+Name = functionsnamelist_en_th[9] or "Error Rejoin",
 CurrentValue = "",
 PlaceholderText = "Input Webhook Url",
 RemoveTextAfterFocusLost = true,
@@ -515,7 +515,7 @@ end,
 })
 
 local EnableMainHook = MainTab:CreateToggle({
-    Name = functionsnamelist_en_th[10],
+    Name = functionsnamelist_en_th[10] or "Error Rejoin",
     CurrentValue = _G.webhook,
     Flag = "Enable Main Webhook",
     Callback = function(Value)
@@ -527,7 +527,7 @@ local EnableMainHook = MainTab:CreateToggle({
 local SecWebhookFunction = MainTab:CreateSection("Reserve Webhook, Player Online, Player Tracker")
 
 local Second_Webhook = MainTab:CreateInput({
-Name = functionsnamelist_en_th[11],
+Name = functionsnamelist_en_th[11] or "Error Rejoin",
 CurrentValue = "",
 PlaceholderText = "Input Webhook Url",
 RemoveTextAfterFocusLost = true,
@@ -539,7 +539,7 @@ end,
 })
 
 local Delay_Webhook = MainTab:CreateInput({
-Name = functionsnamelist_en_th[12],
+Name = functionsnamelist_en_th[12] or "Error Rejoin",
 CurrentValue = "",
 PlaceholderText = "Input Delay Second",
 RemoveTextAfterFocusLost = true,
@@ -551,7 +551,7 @@ end,
 })
 
 local EnableSecondHook = MainTab:CreateToggle({
-    Name = functionsnamelist_en_th[13],
+    Name = functionsnamelist_en_th[13] or "Error Rejoin",
     CurrentValue = false,
     Flag = "Enable Reserve Webhook",
     Callback = function(Value)
@@ -595,7 +595,7 @@ end
 local Gemwow = {}
 
 local GemSelect_Unit = GemFarm:CreateDropdown({
-    Name = functionsnamelist_en_th[14],
+    Name = functionsnamelist_en_th[14] or "Error Rejoin",
     Options = GemunitNames,
     CurrentOption = GemunitNames[1] or "N/A",
     MultipleOptions = false,
@@ -624,7 +624,7 @@ local GemSelect_Unit = GemFarm:CreateDropdown({
 })
 
 local gemCopyid = GemFarm:CreateButton({
-    Name = functionsnamelist_en_th[15],
+    Name = functionsnamelist_en_th[15] or "Error Rejoin",
     Callback = function()
         if #Gemwow > 0 then
             local gemtextToCopy = Gemwow[1]
@@ -648,7 +648,7 @@ local gemCopyid = GemFarm:CreateButton({
 })
 
 local enterunit = GemFarm:CreateInput({
-    Name = functionsnamelist_en_th[16],
+    Name = functionsnamelist_en_th[16] or "Error Rejoin",
     CurrentValue = "",
     PlaceholderText = "Input Unit ID",
     RemoveTextAfterFocusLost = false,
@@ -660,7 +660,7 @@ local enterunit = GemFarm:CreateInput({
 
 _G.isgemfarming = false
 local GemFarm_Toggle = GemFarm:CreateToggle({
-    Name = functionsnamelist_en_th[17],
+    Name = functionsnamelist_en_th[17] or "Error Rejoin",
     CurrentValue = false,
     Flag = "Auto Gem Farm",
     Callback = function(Value)
@@ -712,7 +712,7 @@ end,
 })
 
 local MaxUnitSelect = GemFarm:CreateDropdown({
-    Name = functionsnamelist_en_th[18],
+    Name = functionsnamelist_en_th[18] or "Error Rejoin",
     Options = unitOptions,
     CurrentOption = tostring(_G.limitunit),
     MultipleOptions = false,
@@ -820,7 +820,7 @@ local MiscFunction = MiscTab:CreateSection("Helper")
 
 local MessageAonny = false
 local MessageToggle = MiscTab:CreateToggle({
-    Name = functionsnamelist_en_th[22],
+    Name = functionsnamelist_en_th[22] or "Error Rejoin",
     CurrentValue = true,
     Flag = "MessageToggle",
     Callback = function(Value)
@@ -840,7 +840,7 @@ local MessageToggle = MiscTab:CreateToggle({
 
 local Eshowgem = false
 local ShowGemToggle = MiscTab:CreateToggle({
-    Name = functionsnamelist_en_th[23],
+    Name = functionsnamelist_en_th[23] or "Error Rejoin",
     CurrentValue = true,
     Flag = "GemInfo",
     Callback = function(Value)
@@ -869,7 +869,7 @@ local ShowGemToggle = MiscTab:CreateToggle({
 
 _G.psingfps = 10
 local savepowerfps = MiscTab:CreateInput({
-    Name = functionsnamelist_en_th[30],
+    Name = functionsnamelist_en_th[30] or "Error Rejoin",
     CurrentValue = "",
     PlaceholderText = "Input Number",
     RemoveTextAfterFocusLost = false,
@@ -883,7 +883,7 @@ _G.savingpower = false
 _G.psingfps = 10
 
 local savepower = MiscTab:CreateToggle({
-    Name = functionsnamelist_en_th[24],
+    Name = functionsnamelist_en_th[24] or "Error Rejoin",
     CurrentValue = false,
     Flag = "savepower",
     Callback = function(Value)
@@ -900,7 +900,9 @@ local savepower = MiscTab:CreateToggle({
         if _G.savingpower then
             task.spawn(function()
                 while _G.savingpower do
+                    if _G.savingpower then
                     setfpscap(_G.psingfps)
+                    end
                     print("FPS set to: " .. _G.psingfps)
                     task.wait(10)
                 end
@@ -1021,7 +1023,7 @@ end
 local wow = {}
 local MainDebuggerLoader = Debugger:CreateSection("Manual unit debugger")
 local Select_Unit = Debugger:CreateDropdown({
-    Name = functionsnamelist_en_th[25],
+    Name = functionsnamelist_en_th[25] or "Error Rejoin",
     Options = unitNames,
     CurrentOption = unitNames[1] or "N/A",
     MultipleOptions = false,
@@ -1042,7 +1044,7 @@ local Select_Unit = Debugger:CreateDropdown({
 })
 
 local Copyid = Debugger:CreateButton({
-    Name = functionsnamelist_en_th[26],
+    Name = functionsnamelist_en_th[26] or "Error Rejoin",
     Callback = function()
         if #wow > 0 then
             local textToCopy = wow[1]
@@ -1066,7 +1068,7 @@ local Copyid = Debugger:CreateButton({
 })
 
 local PlayerFeet = Debugger:CreateButton({
-    Name = functionsnamelist_en_th[27],
+    Name = functionsnamelist_en_th[27] or "Error Rejoin",
     Callback = function()
         local character = game.Players.LocalPlayer.Character
         if character and character:FindFirstChild("HumanoidRootPart") then
@@ -1094,7 +1096,7 @@ local PlayerFeet = Debugger:CreateButton({
 
 local DebuggerLoader = Debugger:CreateSection("Run Unit Debugger to get UnitID and Place Location")
 local RunDegger = Debugger:CreateButton({
-    Name = functionsnamelist_en_th[28],
+    Name = functionsnamelist_en_th[28] or "Error Rejoin",
     Callback = function()
         loadstring(game:HttpGet('https://raw.githubusercontent.com/yClematiS/Anime-/refs/heads/main/debugger'))()
     end,
@@ -1351,7 +1353,7 @@ displayUnits("")
 
 local RunOldDebugger = Debugger:CreateSection("Run Old Unit Debugger to get UnitID")
 local RunOldDegger = Debugger:CreateButton({
-    Name = functionsnamelist_en_th[29],
+    Name = functionsnamelist_en_th[29] or "Error Rejoin",
     Callback = function()
 tid()
 end,
