@@ -923,7 +923,7 @@ local Eautosummon = GachaTab:CreateToggle({
     end,
 })
 
-local SummonFunc = GachaTab:CreateSection("Items")
+local ItemsFunc = GachaTab:CreateSection("Items")
 local ChirstButton = GachaTab:CreateButton({
     Name = functionsnamelist_en_th[35] or "Error Rejoin",
     Callback = function()
