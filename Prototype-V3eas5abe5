@@ -58,7 +58,9 @@ if not _G.thaimode then
         "Select Summon Method", -- 31
         "Select Banner", --32
         "Auto Summon", --33
-        "Show Script Ui on Startup" --34
+        "Show Script Ui on Startup", --34
+        "[Inventory] Use Christmas Capsule", --35
+        "[Inventory] Use 10x Christmas Capsule" --36
     }
 else
     functionsnamelist_en_th = {
@@ -95,7 +97,9 @@ else
         "Select Summon Method (จำนวนการสุ่ม)", -- 31
         "Select Banner (เลือกตู้)", --32
         "Auto Summon (สุ่มอัตโนมัติ)", --33
-        "Show Script Ui on Startup (โชว์หน้าต่างโปรตอนรัน)" --34
+        "Show Script Ui on Startup (โชว์หน้าต่างโปรตอนรัน)", --34
+        "[Inventory] Use Christmas Capsule (ใช้แค็ปชูลคริสมาสในช่องเก็บของ)", --35
+        "[Inventory] Use 10x Christmas Capsule (ใช้แค็ปชูลคริสมาส 10 อันในช่องเก็บของ)" --36
     }
 end
 
@@ -841,7 +845,7 @@ task.spawn(function()
     end
 end)
 
-local GachaTab = MainWindow:CreateTab("Summon")
+local GachaTab = MainWindow:CreateTab("Summons & Items")
 local SummonFunc = GachaTab:CreateSection("Summoner")
 
 summonmode = {
@@ -918,6 +922,35 @@ local Eautosummon = GachaTab:CreateToggle({
         end
     end,
 })
+
+local SummonFunc = GachaTab:CreateSection("Items")
+local ChirstButton = GachaTab:CreateButton({
+    Name = functionsnamelist_en_th[35] or "Error Rejoin",
+    Callback = function()
+        local args = {
+            [1] = "capsule_christmas2",
+            [2] = {
+                ["use10"] = false
+            }
+        }
+        
+        game:GetService("ReplicatedStorage").endpoints.client_to_server.use_item:InvokeServer(unpack(args))
+    end,
+ })
+
+ local ChirstButton10 = GachaTab:CreateButton({
+    Name = functionsnamelist_en_th[36] or "Error Rejoin",
+    Callback = function()
+        local args = {
+            [1] = "capsule_christmas2",
+            [2] = {
+                ["use10"] = true
+            }
+        }
+        
+        game:GetService("ReplicatedStorage").endpoints.client_to_server.use_item:InvokeServer(unpack(args))
+    end,
+ })
 
 local MiscTab = MainWindow:CreateTab("Miscellaneous")
 local MiscFunction = MiscTab:CreateSection("Helper")
