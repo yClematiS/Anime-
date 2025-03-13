@@ -154,7 +154,7 @@ local usernames = game.Players.LocalPlayer.Character.Name
 print("Loading Lib")
 _G.theme = "Amethyst"
 wait(0.2)
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/yClematiS/Main_Loader/main/ui_lib'))()
 print("Ui Lib Loaded")
 wait(1)
 print("Loading Function")
