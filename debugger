@@ -1,0 +1,94 @@
+local mt = getrawmetatable(game)
+local oldNamecall = mt.__namecall
+setreadonly(mt, false)
+local isPopupActive = false
+mt.__namecall = newcclosure(function(self, ...)
+    local method = getnamecallmethod()
+    local args = {...}
+    if method == "InvokeServer" and tostring(self) == "spawn_unit" then
+        local unitId = args[1]
+        local location = args[2]
+        print("InvokeServer called with unitId:", unitId, "location:", location)
+        if not isPopupActive then
+            isPopupActive = true
+            local screenGui = Instance.new("ScreenGui")
+            screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+            local frame = Instance.new("Frame")
+            frame.Size = UDim2.new(0, 300, 0, 200)
+            frame.Position = UDim2.new(1, -310, 0.9, -160)
+            frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+            frame.BackgroundTransparency = 0.5
+            frame.Parent = screenGui
+            local label = Instance.new("TextLabel")
+            label.Size = UDim2.new(1, 0, 0.4, 0)
+            label.Position = UDim2.new(0, 0, 0, 0)
+            label.Text = "Copy Unit Id (" .. tostring(unitId) .. ")?"
+            label.TextColor3 = Color3.fromRGB(255, 255, 255)
+            label.TextScaled = true
+            label.BackgroundTransparency = 1
+            label.Parent = frame
+            local buttonYes = Instance.new("TextButton")
+            buttonYes.Size = UDim2.new(0.5, -5, 0.3, -5)
+            buttonYes.Position = UDim2.new(0, 5, 0.4, 5)
+            buttonYes.Text = "Yes"
+            buttonYes.TextColor3 = Color3.fromRGB(255, 255, 255)
+            buttonYes.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+            buttonYes.Parent = frame
+            local buttonNo = Instance.new("TextButton")
+            buttonNo.Size = UDim2.new(0.5, -5, 0.3, -5)
+            buttonNo.Position = UDim2.new(0.5, 5, 0.4, 5)
+            buttonNo.Text = "No"
+            buttonNo.TextColor3 = Color3.fromRGB(255, 255, 255)
+            buttonNo.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+            buttonNo.Parent = frame
+            local labelLocation = Instance.new("TextLabel")
+            labelLocation.Size = UDim2.new(1, 0, 0.3, 0)
+            labelLocation.Position = UDim2.new(0, 0, 0.6, 0)
+            labelLocation.Text = "Copy Location (" .. tostring(location) .. ")?"
+            labelLocation.TextColor3 = Color3.fromRGB(255, 255, 255)
+            labelLocation.TextScaled = true
+            labelLocation.BackgroundTransparency = 1
+            labelLocation.Parent = frame
+            local buttonYesLocation = Instance.new("TextButton")
+            buttonYesLocation.Size = UDim2.new(0.5, -5, 0.3, -5)
+            buttonYesLocation.Position = UDim2.new(0, 5, 0.9, 5)
+            buttonYesLocation.Text = "Yes"
+            buttonYesLocation.TextColor3 = Color3.fromRGB(255, 255, 255)
+            buttonYesLocation.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+            buttonYesLocation.Parent = frame
+            local buttonNoLocation = Instance.new("TextButton")
+            buttonNoLocation.Size = UDim2.new(0.5, -5, 0.3, -5)
+            buttonNoLocation.Position = UDim2.new(0.5, 5, 0.9, 5)
+            buttonNoLocation.Text = "No"
+            buttonNoLocation.TextColor3 = Color3.fromRGB(255, 255, 255)
+            buttonNoLocation.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+            buttonNoLocation.Parent = frame
+            buttonYes.MouseButton1Click:Connect(function()
+                setclipboard(tostring(unitId))
+            end)
+            buttonNo.MouseButton1Click:Connect(function()
+                screenGui:Destroy()
+                isPopupActive = false
+            end)
+            buttonYesLocation.MouseButton1Click:Connect(function()
+                setclipboard(tostring(location))
+            end)
+            buttonNoLocation.MouseButton1Click:Connect(function()
+                screenGui:Destroy()
+                isPopupActive = false
+            end)
+            wait(5)
+            local tweenService = game:GetService("TweenService")
+            local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+            local goal = {Transparency = 1}
+            local tween = tweenService:Create(frame, tweenInfo, goal)
+            tween:Play()
+            tween.Completed:Connect(function()
+                screenGui:Destroy()
+                isPopupActive = false
+            end)
+        end
+    end
+    return oldNamecall(self, ...)
+end)
+setreadonly(mt, true)
